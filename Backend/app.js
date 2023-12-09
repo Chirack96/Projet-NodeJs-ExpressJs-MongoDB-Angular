@@ -25,8 +25,8 @@ next();
 app.use(bodyParser.json());
 
 
-app.use('/api/storeProduct', storeProductRoutes);
-app.use('/api/auth', userRoutes);
+app.use('/storeProduct', storeProductRoutes);
+app.use('/auth', userRoutes);
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 module.exports = app;

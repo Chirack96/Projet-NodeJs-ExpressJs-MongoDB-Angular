@@ -83,10 +83,11 @@ exports.getOneProduct = (req, res, next) => {
         .catch((error) => res.status(404).json({ error }));
     }
 exports.getAllProducts = (req, res, next) => {
+  console.log("req");
     Product.find()
         .then((products) => {
-            products = products.filter((product) => product.verified == true);
-            console.log(req.auth.isAdmin);
+            //products = products.filter((product) => product.verified == true);
+            console.log(products);
             res.status(200).json(products);
         })
         .catch((error) => res.status(400).json({ error }));
