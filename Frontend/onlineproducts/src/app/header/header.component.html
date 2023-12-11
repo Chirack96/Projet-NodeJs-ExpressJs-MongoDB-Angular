@@ -3,9 +3,9 @@
         <li><a routerLink="/">Accueil</a></li>
         <li *ngIf="!isLoggedIn()"><a routerLink="/login">Login</a></li>
         <li *ngIf="!isLoggedIn()"><a routerLink="/inscription">Inscription</a></li>
-        <li *ngIf="isLoggedIn()">Deconnexion</li>
         <li *ngIf="isLoggedIn()"><a routerLink="/add-product">Ajouter un produit</a></li>
         <li *ngIf="isLoggedIn()"><a routerLink="/cart">Panier</a></li>
+        <li *ngIf="isLoggedIn()" (click)="logout()"><a routerLink="/home">Logout</a></li>
     </ul>
 </header>
 <router-outlet></router-outlet>

@@ -19,12 +19,13 @@ exports.signup = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
-  User.findOne({ email: req.body.email })
+  console.log(req.body);
+  User.findOne({ username: req.body.username })
     .then((user) => {
       if (!user) {
         return res.status(401).json({ error: "Utilisateur non trouvé !" });
       }
-      bcrypt
+      /*bcrypt
         .compare(req.body.password, user.password)
         .then((valid) => {
           if (!valid) {
@@ -39,7 +40,18 @@ exports.login = (req, res, next) => {
             ),
           });
         })
-        .catch((error) => res.status(500).json({ error }));
+        .catch((error) => res.status(500).json({ error }));*/
+      if (req.body.password == user.password) {
+        res.status(200).json({
+          userId: user._id,
+          msg: true,
+          token: jwt.sign(
+            { userId: user._id, isAdmin: user.admin },
+            "RANDOM_TOKEN_SECRET",
+            { expiresIn: "24h" }
+          ),
+        });
+      }
     })
-    .catch((error) => res.status(500).json({ error }));
+    .catch((error) => res.status(500).json({ error, msg: false }));
 };
