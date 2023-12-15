@@ -3,13 +3,17 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class AuthService {
+  static isRegisteredIn: boolean = false;
 
-  register(username: string, email: string, password: string) {
-    if (username === 'utilisateur' && email === 'email' && password === 'motdepasse') {
-      AuthService.isLoggedIn = true;
+  register(msg:boolean): boolean {
+    if (msg) {
+      AuthService.isRegisteredIn = true;
       return true;
+    } else {
+      AuthService.isRegisteredIn = false;
+      return false;
     }
-    throw new Error('Method not implemented.');
+    
   }
   static isLoggedIn: boolean = false;
 

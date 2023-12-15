@@ -20,4 +20,13 @@ export class AxiosService {
       return response;
     });
   }
+
+  register(username: string, password: string): Promise<any> {
+    const registerData = { username, password };
+    return axios.post(`${this.apiUrl}/register`, registerData).then((response) => {
+      // Handle successful register response
+      console.log('Register successful', response);
+      return response;
+    });
+  }
 }

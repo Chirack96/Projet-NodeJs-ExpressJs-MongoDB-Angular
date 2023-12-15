@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { ProductListComponent } from '../product-list/product-list.component';
 import { AuthService } from '../services/auth.services';
 @Component({
     selector: 'app-header',
     standalone: true,
-    imports: [CommonModule, RouterModule],
+    imports: [CommonModule, RouterModule, ProductListComponent],
     templateUrl: './header.component.html',
     styleUrl: './header.component.scss'
 })
@@ -24,4 +25,7 @@ export class HeaderComponent {
         localStorage.removeItem('token');
         this.router.navigate(['/login']);
   }
+  getAllProducts(): void {
+    this.router.navigate(['/home']);
+}
 }

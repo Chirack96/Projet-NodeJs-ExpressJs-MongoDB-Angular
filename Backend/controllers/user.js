@@ -1,21 +1,34 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
-exports.signup = (req, res, next) => {
+exports.signup =  async(req, res, next) => {
+  console.log(req.body);
+  User.findOne({ username: req.body.username })
+    .then((user) => {
+      if (user) {
+        return res.status(401).json({ error: "Utilisateur déjà existant !" });
+      }
+    })
+    .catch((error) => res.status(500).json({ error, msg: false }));
   bcrypt
     .hash(req.body.password, 10)
-    .then((hash) => {
+    .then(async (hash) => {
       const user = new User({
-        email: req.body.email,
+        username: req.body.username,
         //password: req.body.password
         password: hash,
       });
-      user
+      console.log(user);
+     await  user
         .save()
-        .then(() => res.status(201).json({ message: "Utilisateur créé !" }))
-        .catch((error) => res.status(400).json({ error }));
+
+        .then(() => res.status(201).json({ message: "Utilisateur créé !" ,msg: true}))
+        .catch((saveError) => {
+        console.error("Error saving user:", saveError);
+        res.status(400).json({ error: 'Error saving user to the database' });
+      });
     })
-    .catch((error) => res.status(500).json({ error }));
+    .catch((error) => res.status(500).json({ error, msg: false }));
 };
 
 exports.login = (req, res, next) => {
@@ -25,7 +38,7 @@ exports.login = (req, res, next) => {
       if (!user) {
         return res.status(401).json({ error: "Utilisateur non trouvé !" });
       }
-      /*bcrypt
+      bcrypt
         .compare(req.body.password, user.password)
         .then((valid) => {
           if (!valid) {
@@ -33,6 +46,7 @@ exports.login = (req, res, next) => {
           }
           res.status(200).json({
             userId: user._id,
+            msg: true,
             token: jwt.sign(
               { userId: user._id, isAdmin: user.admin },
               "RANDOM_TOKEN_SECRET",
@@ -40,8 +54,8 @@ exports.login = (req, res, next) => {
             ),
           });
         })
-        .catch((error) => res.status(500).json({ error }));*/
-      if (req.body.password == user.password) {
+        .catch((error) => res.status(500).json({ error }));
+      /*if (req.body.password == user.password) {
         res.status(200).json({
           userId: user._id,
           msg: true,
@@ -51,7 +65,7 @@ exports.login = (req, res, next) => {
             { expiresIn: "24h" }
           ),
         });
-      }
+      }*/
     })
     .catch((error) => res.status(500).json({ error, msg: false }));
 };

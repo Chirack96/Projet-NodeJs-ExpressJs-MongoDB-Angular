@@ -14,7 +14,7 @@ export class ProductComponent implements OnInit {
   @Input() product!: Products;
 
   buttonText!: string;
-  panierService: any;
+
   
   ngOnInit(): void {
     this.buttonText = "Add to cart";
@@ -23,10 +23,13 @@ export class ProductComponent implements OnInit {
   addToCart() {
   if (this.buttonText === 'Add to cart') {
     this.buttonText = "Remove from cart";
+    
   }
   else {
     this.buttonText = "Add to cart";
 
   }
   }
+
+ 
 }

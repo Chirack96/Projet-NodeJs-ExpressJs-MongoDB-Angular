@@ -36,7 +36,8 @@ export class LoginComponent {
         // Handle login error
         console.error(error.response.data);
       });
-    /* this.axiosService.login(this.username, this.password)
+  }
+  /*this.axiosService.login(this.username, this.password)
       .then(response => {
         // Handle successful login response
         //console.log('Login successful', response);
@@ -44,22 +45,22 @@ export class LoginComponent {
       .catch(error => {
         // Handle login error
         console.error('Login error', error);
-      });*/
-  }
+      });
+  }*/
 
   /*onSubmit(): void {
-    const loginSuccessful = this.authService.login(
-      this.username,
-      this.password
-    );
+      const loginSuccessful = this.authService.login(
+        this.username,
+        this.password
+      );
 
-    if (loginSuccessful) {
-      console.log('Connexion réussie');
-      // Utilisez le service de routage pour rediriger l'utilisateur
-      this.router.navigate(['/home']); // Remplacez '/accueil' par le chemin de votre page d'accueil
-    } else {
-      console.log('Échec de la connexion');
-      // Affichez un message d'erreur à l'utilisateur si nécessaire
-    }
-  }*/
+      if (loginSuccessful) {
+        console.log('Connexion réussie');
+        // Utilisez le service de routage pour rediriger l'utilisateur
+        this.router.navigate(['/home']); // Remplacez '/accueil' par le chemin de votre page d'accueil
+      } else {
+        console.log('Échec de la connexion');
+        // Affichez un message d'erreur à l'utilisateur si nécessaire
+      }
+    }*/
 }
