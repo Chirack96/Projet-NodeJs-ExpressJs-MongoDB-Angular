@@ -17,7 +17,8 @@ export class ProductsService {
             category: 'category 1',
             createDate: new(Date),
             location: 'Paris',
-            quantity: 1
+            quantity: 1,
+            
         
         },
         {
@@ -29,7 +30,8 @@ export class ProductsService {
             category: 'category 2',
             createDate: new(Date),
             location: 'Paris',
-            quantity: 1
+            quantity: 1,
+            
         },
         {
             id: 3,
@@ -40,7 +42,8 @@ export class ProductsService {
             category: 'category 3',
             createDate: new(Date),
             location: 'Paris',
-            quantity: 1
+            quantity: 1,
+        
         },
         {
             id: 4,
@@ -51,7 +54,8 @@ export class ProductsService {
             category: 'category 4',
             createDate: new(Date),
             location: 'Paris',
-            quantity: 1
+            quantity: 1,
+            
         },
         {
             id: 5,
@@ -62,7 +66,8 @@ export class ProductsService {
             category: 'category 5',
             createDate: new(Date),
             location: 'Paris',
-            quantity: 1
+            quantity: 1,
+            
         },
         {
             id: 6,
@@ -73,7 +78,8 @@ export class ProductsService {
             category: 'category 6',
             createDate: new(Date),
             location: 'Paris',
-            quantity: 1
+            quantity: 1,
+            
         },
         {
             id: 7,
@@ -84,7 +90,8 @@ export class ProductsService {
             category: 'category 7',
             createDate: new(Date),
             location: 'Paris',
-            quantity: 1
+            quantity: 1,
+            
         },
         {
             id: 8,
@@ -95,7 +102,8 @@ export class ProductsService {
             category: 'category 8',
             createDate: new(Date),
             location: 'Paris',
-            quantity: 1
+            quantity: 1,
+            
         },
         {
             id: 9,
@@ -106,7 +114,8 @@ export class ProductsService {
             category: 'category 9',
             createDate: new(Date),
             location: 'Paris',
-            quantity: 1
+            quantity: 1,
+            
         },
         ];
         getAllProducts(): Products[] {

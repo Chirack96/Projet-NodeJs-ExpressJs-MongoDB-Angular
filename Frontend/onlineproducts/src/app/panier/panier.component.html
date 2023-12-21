@@ -1,0 +1,11 @@
+<div class="cart-container">
+    <h2>Mon Panier</h2>
+    <ul class="cart-items">
+        <li *ngFor="let product of panierProducts" class="cart-item">
+            {{ product.title }} - {{ product.price }}
+            <button (click)="panierstatus(product)">
+                {{ product.isInPanier ? 'Remove from Cart' : 'Add to Cart' }}
+            </button>
+        </li>
+    </ul>
+</div>

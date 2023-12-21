@@ -29,7 +29,6 @@ export class InscriptionComponent {
 
     axios.post('http://localhost:3000/auth/signup', registrationData)
       .then((response) => {
-        // Gérer la réponse réussie du backend
         console.log(response.data);
         if (response.data.msg) {
           this.router.navigate(['/login']);
@@ -38,30 +37,10 @@ export class InscriptionComponent {
         return response.data.msg;
       })
       .catch((error) => {
-        // Gérer les erreurs
         console.error(error.response.data);
       });
   }
 }
-
-    // Ajoutez ici la logique d'inscription
-    /*console.log(
-      `Inscription avec ${this.username}, ${this.email} et ${this.password}`
-    );
-
-    if (registrationSuccess !== undefined && registrationSuccess !== null) {
-      console.log('Inscription réussie');
-      this.router.navigate(['/login']);
-    } else {
-      console.log("Échec de l'inscription");
-      // Gérer l'échec de l'inscription, par exemple, afficher un message d'erreur
-    }
-  }
-}*/
-
-// Existing code...
-
-// Add a closing curly brace
 
 
 

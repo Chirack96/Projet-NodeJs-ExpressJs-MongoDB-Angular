@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 exports.signup =  async(req, res, next) => {
-  console.log(req.body);
+  console.log("signup: ",req.body);
   User.findOne({ username: req.body.username })
     .then((user) => {
       if (user) {
@@ -32,7 +32,7 @@ exports.signup =  async(req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
-  console.log(req.body);
+  console.log("login: ",req.body);
   User.findOne({ username: req.body.username })
     .then((user) => {
       if (!user) {
@@ -55,17 +55,21 @@ exports.login = (req, res, next) => {
           });
         })
         .catch((error) => res.status(500).json({ error }));
-      /*if (req.body.password == user.password) {
-        res.status(200).json({
-          userId: user._id,
-          msg: true,
-          token: jwt.sign(
-            { userId: user._id, isAdmin: user.admin },
-            "RANDOM_TOKEN_SECRET",
-            { expiresIn: "24h" }
-          ),
-        });
-      }*/
     })
     .catch((error) => res.status(500).json({ error, msg: false }));
 };
+
+exports.getAllUsers = (req, res, next) => {
+  console.log("getAllUsers");
+  User.find()
+    .then((users) => res.status(200).json(users))
+    .catch((error) => res.status(400).json({ error }));
+};
+
+exports.getCurrentUser = (req, res, next) => {
+  console.log("getCurrentUser");
+  User.findOne({ _id: req.auth.userId })
+    .then((user) => res.status(200).json(user))
+    .catch((error) => res.status(400).json({ error }));
+};
+

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { ProductListComponent } from '../product-list/product-list.component';
 import { AuthService } from '../services/auth.services';
@@ -13,10 +13,10 @@ import { AuthService } from '../services/auth.services';
 export class HeaderComponent {
     test=new AuthService;
    
-    constructor(private authService: AuthService,private router: Router) {}
+    constructor(private authService: AuthService,@Inject(Router) private router: Router) {}
 
     isLoggedIn(): boolean {
-        console.log(AuthService.isLoggedIn);
+        //console.log(AuthService.isLoggedIn);
         return AuthService.isLoggedIn;
     }
 

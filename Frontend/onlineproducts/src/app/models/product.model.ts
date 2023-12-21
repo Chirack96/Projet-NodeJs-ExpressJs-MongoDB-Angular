@@ -8,6 +8,6 @@ export class Products {
     createDate!: Date;
      location!: string;
     quantity!: number;
-
+    //isInPanier!: boolean;
     
 }

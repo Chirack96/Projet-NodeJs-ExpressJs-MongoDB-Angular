@@ -10,7 +10,7 @@ import { ProductListComponent } from './product-list/product-list.component';
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
-    imports: [CommonModule, ProductListComponent, HeaderComponent, AsideComponent, FormsModule, RouterModule],
+    imports: [CommonModule, ProductListComponent, HeaderComponent, AsideComponent, FormsModule, RouterModule,],
 })
 export class AppComponent {
   ngOnInit(): void {

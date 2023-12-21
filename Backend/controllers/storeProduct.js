@@ -1,8 +1,5 @@
-const auth = require("../middleware/auth");
-const isAdmin = require("../middleware/auth");
 const Product = require("../models/Product");
 const fs = require("fs");
-const jwt = require("jsonwebtoken");
 
 exports.createProduct = (req, res, next) => {
   const productObject = JSON.parse(req.body.product);
