@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { AsideComponent } from "../aside/aside.component";
+import { AsideComponent } from '../aside/aside.component';
 import { Products } from '../models/product.model';
 import { ProductComponent } from '../product/product.component';
 import { ProductsService } from '../services/product.services';

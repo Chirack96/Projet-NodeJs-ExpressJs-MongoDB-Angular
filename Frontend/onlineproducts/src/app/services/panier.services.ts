@@ -9,7 +9,10 @@ export class PanierService {
   static isInPanier: boolean = false;
 
   constructor() {}
-
+  
+isInPanier(): boolean {
+  return PanierService.isInPanier;
+}
   async createUserProduct(user_id: string, product_id: string): Promise<any> {
     console.log(this.getUserProduct(user_id));
     const productCreated = { user_id, product_id };
@@ -24,14 +27,14 @@ export class PanierService {
     //return response;
   }
   async getUserProduct(user_id: string): Promise<any> {
-    await axios({
-      url: 'http://localhost:3000/user-product/product',
-      method: 'get',
+    console.log(user_id);
+    const response_=await axios.get('http://localhost:3000/user-product/product',{
       params: { user_id: user_id },
     }).then((response) => {
-      console.log(response);
+      console.log(response.data);
+      return response.data;
     });
-    
+    return response_;
     
   }
   async deleteUserProduct(id: string): Promise<any> {

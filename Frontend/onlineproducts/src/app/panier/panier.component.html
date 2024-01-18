@@ -1,11 +1,11 @@
 <div class="cart-container">
     <h2>Mon Panier</h2>
+    <button (click)="loadPanier()">tetstst</button>
     <ul class="cart-items">
         <li *ngFor="let product of panierProducts" class="cart-item">
+        <img [src]="product.imageUrl" [alt]="product.title">
             {{ product.title }} - {{ product.price }}
-            <button (click)="panierstatus(product)">
-                {{ product.isInPanier ? 'Remove from Cart' : 'Add to Cart' }}
-            </button>
+            <button (click)="panierStatus(product)"> Remove product</button>
         </li>
     </ul>
 </div>

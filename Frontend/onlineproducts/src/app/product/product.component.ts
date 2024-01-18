@@ -25,11 +25,22 @@ export class ProductComponent implements OnInit {
    // this.isInPanier = this.product.isInPanier;
   
   }
-  panierstatus(): void {
+  panierStatus(): void {
     let token = this.authService.isAuthenticated();
     console.log(token);
-    //let isInPanier=this.panierService.getUserProduct(token.toString());
+    let isInPanier=this.panierService.getUserProduct(token.toString());
     this.panierService.createUserProduct(token.toString(), this.product.id.toString());
+    console.log(isInPanier);
+    if (this.isInPanier) {
+      this.buttonText = "Remove from cart";
+      this.panierService.deleteUserProduct(this.product.id.toString()); 
+      
+    }
+    else {
+      this.buttonText = "Add to cart";
+      this.panierService.createUserProduct(token.toString(), this.product.id.toString());
+      
+    }
     /*if (this.product.isInPanier) {
       this.buttonText = "Remove from cart";
       this.panierService.createUserProduct(token.toString(), this.product.id.toString());

@@ -8,15 +8,18 @@ exports.getAllUserProduct = async(req, res, next) => {
 }
 
 exports.createUSerProduct = async(req, res, next) => {
-  console.log("create user product", req.body);
+  //console.log("create user product", req.body);
+  //console.log("create user product", req.body.user_id);
   const userProduct = new UserProduct({
     id_user: req.body.user_id,
     id_product: req.body.product_id,
   });
   console.log("userProduct", userProduct);
   userProduct.save()
-    .then(() => res.status(201).json({ message: 'produit enregistré !'}))
-    .catch(error => res.status(400).json({ error }));
+    .then(() => {res.status(201).json({ message: 'produit enregistré !'})
+  console.log("produit enregistré !");
+  })
+    .catch(error => {res.status(400).json({ error });console.log(error)});
 }
 
 exports.getProductUser = async(req, res, next) => {
@@ -24,7 +27,10 @@ exports.getProductUser = async(req, res, next) => {
   UserProduct.find({ id_user: req.query.user_id})
     .then((userProduct) => {
       userProduct = userProduct.map((product) => {
-        return product.id_product;
+        return {id:product.id_product, name:product.name, description:product.description, price:product.price, image:product.image};
+      });
+      userProduct = userProduct.filter((product) => {
+        return product !== undefined;
       });
       
       
