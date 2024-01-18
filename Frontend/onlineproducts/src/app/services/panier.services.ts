@@ -24,7 +24,7 @@ isInPanier(): boolean {
     })
 
     //console.log(response);
-    //return response;
+    //return response//.data;
   }
   async getUserProduct(user_id: string): Promise<any> {
     console.log(user_id);
