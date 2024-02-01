@@ -13,8 +13,7 @@ import { ProductsService } from '../services/product.services';
   styleUrl: './panier.component.scss',
 })
 export class PanierComponent implements OnInit {
-  test: Array<Products> = [];
-  panierProducts: Array<Products> = [];
+  panierProducts: any[] = [];
   authService: AuthService = new AuthService();
   constructor(
     private panierService: PanierService,
@@ -27,33 +26,45 @@ export class PanierComponent implements OnInit {
   isInPanier(): boolean {
     return PanierService.isInPanier;
   }
-  async loadPanier() {
-    console.log(this.authService.isAuthenticated().toString());
-    const response = await this.panierService.getUserProduct(
-      this.authService.isAuthenticated().toString()
-    );
-    this.panierProducts = response;
-    console.log(response);
-    console.log(this.panierProducts);
-    console.log(this.productsService.products);
-    let test = this.panierProducts
-      .map((product) => {
-        return this.productsService.products.find(
-          (product_) => product_.id == product.id
-        );
-      })
-      .filter((product) => product !== undefined) as Products[];
-    console.log(test);
-    this.panierProducts = test;
-    return test;
-    //this.panierProducts.push(response.data);
+  loadPanier(): void {
+    let token = this.authService.isAuthenticated();
+    console.log(token);
+    this.panierService.getUserProduct(token.toString()).then((response) => {
+      console.log(response);
+      this.panierProducts = response;
+      console.log(this.panierProducts);
+    });
+    
   }
 
-  panierStatus(product: Products): void {
-    if (this.isInPanier() === false) {
-      this.panierService.createUserProduct('1', product.id.toString());
-    } else {
-      this.panierService.deleteUserProduct(product.id.toString());
-    }
+  async deletePanierProduct(id: string) {
+    await this.panierService.deleteUserProduct(id);
+    this.loadPanier();
   }
+  async updatePanierProduct(id: string, title: string, description: string, imageUrl: string, price: number) {
+    await this.productsService.updateOneProduct(id, title, description, imageUrl, price);
+    this.loadPanier();
+  }
+  async createPanierProduct(title: string, description: string, imageUrl: string, price: number, id: number, quantity: number) {
+    const panierProduct = await this.productsService.getOneProduct(id.toString());
+    console.log(panierProduct);
+    this.loadPanier();
+  }
+
+  addProductToCart(product: Products): void {
+    this.panierService.createUserProduct(
+      this.authService.isAuthenticated().toString(),
+      product._id.toString()
+      );
+  }
+  
+  removeProductFromCart(id: String): void {
+    this.panierService.deleteUserProduct(
+      
+      id.toString()
+      ).then(()=>{
+        this.loadPanier();
+      });
+  }
+
 }

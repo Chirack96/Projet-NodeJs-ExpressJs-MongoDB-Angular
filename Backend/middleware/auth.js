@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
     //console.log(isAdmin);
     req.auth = {
       userId: userId,
-      isAdmin: isAdmin,
+      //isAdmin: isAdmin,
     };
     
     next();

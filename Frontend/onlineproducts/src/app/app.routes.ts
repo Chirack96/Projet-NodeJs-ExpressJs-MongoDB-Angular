@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AddproductComponent } from './addproduct/addproduct.component';
 import { InscriptionComponent } from './inscription/inscription.component';
 import { LoginComponent } from './login/login.component';
 import { PanierComponent } from './panier/panier.component';
@@ -14,6 +15,7 @@ export const appRoutes: Routes = [
         { path: 'home', component: ProductListComponent },
          { path: '', component: ProductListComponent },
         { path: 'panier', component: PanierComponent },
+        { path: 'addproduct', component: AddproductComponent },
         
 
 ];

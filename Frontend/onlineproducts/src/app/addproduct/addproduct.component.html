@@ -1,0 +1,18 @@
+<form (ngSubmit)="onSubmit()">
+    <label for="title">Title:</label>
+    <input type="text" id="title" [(ngModel)]="newProduct.title" name="title" required>
+
+    <label for="description">Description:</label>
+    <textarea id="description" [(ngModel)]="newProduct.description" name="description" required></textarea>
+
+    <label for="imageUrl">Image URL:</label>
+    <input type="file" (change)="onFileSelected($event)"  id="imageUrl"/>
+
+    <label for="price">Price:</label>
+    <input type="number" id="price" [(ngModel)]="newProduct.price" name="price" required>
+
+    <label for="quantity">Quantity:</label>
+    <input type="number" id="quantity" [(ngModel)]="newProduct.quantity" name="quantity" required>
+
+    <button type="submit">Submit</button>
+</form>

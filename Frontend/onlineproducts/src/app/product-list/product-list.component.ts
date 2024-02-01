@@ -14,9 +14,8 @@ import { ProductsService } from '../services/product.services';
 export class ProductListComponent implements OnInit {
   products: Products[] = [];
   constructor(private ProductServices: ProductsService) { }
-  ngOnInit(): void {
-    this.products = this.ProductServices.getAllProducts();
-    
+  async ngOnInit(): Promise<void> {
+    this.products = await this.ProductServices.getAllProducts();
   }
 }
 

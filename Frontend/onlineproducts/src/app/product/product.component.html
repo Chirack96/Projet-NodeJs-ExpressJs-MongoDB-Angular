@@ -1,13 +1,9 @@
 <div class="products-card" [ngClass]="{snapped : buttonText === 'Remove to cart'}">
-    <h2>{{product.title | uppercase}}</h2>
-    <p>Mis en ligne {{product.createDate | date : 'le dd/MM/yy à HH:mm'}}</p>
-    <img [src]="product.imageUrl" [alt]="product.title">
+    <h2>{{product.title.toString() | uppercase}}</h2>
+    <img [src]="product.imageUrl" [alt]="product.title" >
     <p>{{product.description}}</p>
     <p>{{product.price}} €</p>
-    <p>{{product.category}}</p>
-    <p>{{product.quantity}}</p>
-    <p *ngIf="product.location">Pays du vendeur: {{product.location}}</p>
     <p>
-        <button (click)="panierStatus()">{{buttonText}}</button>
+        <button (click)="addToCart()">{{buttonText}}</button>
     </p>
 </div>

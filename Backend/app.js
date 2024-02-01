@@ -31,5 +31,10 @@ app.use('/storeProduct', storeProductRoutes);
 app.use('/auth', userRoutes);
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/user-product', userProductRoutes);
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something went wrong!');
+});
+
 
 module.exports = app;

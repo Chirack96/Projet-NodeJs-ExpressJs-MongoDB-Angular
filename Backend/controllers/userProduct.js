@@ -1,5 +1,5 @@
 const UserProduct = require('../models/UserProduct');
-
+const Product = require('../models/Product');
 exports.getAllUserProduct = async(req, res, next) => {
     console.log("get all user product");
   UserProduct.find()
@@ -8,8 +8,6 @@ exports.getAllUserProduct = async(req, res, next) => {
 }
 
 exports.createUSerProduct = async(req, res, next) => {
-  //console.log("create user product", req.body);
-  //console.log("create user product", req.body.user_id);
   const userProduct = new UserProduct({
     id_user: req.body.user_id,
     id_product: req.body.product_id,
@@ -18,25 +16,43 @@ exports.createUSerProduct = async(req, res, next) => {
   userProduct.save()
     .then(() => {res.status(201).json({ message: 'produit enregistré !'})
   console.log("produit enregistré !");
+  
   })
     .catch(error => {res.status(400).json({ error });console.log(error)});
 }
 
-exports.getProductUser = async(req, res, next) => {
+exports.getProductUser = async (req, res, next) => {
+  try {
+    console.log(req.query.user_id);
+    const userProducts = await UserProduct.find({ id_user: req.query.user_id });
+
+    const productsDetails = await Promise.all(userProducts.map(async (product) => {
+      const productDetails = await Product.findById(product.id_product);
+      if (!productDetails) return null;
+
+      console.log(productDetails.title);
+      return {
+        id: product.id_product,
+        title: productDetails.title,
+        description: productDetails.description,
+        price: productDetails.price,
+        image: productDetails.imageUrl
+      };
+    }));
+
+
+    const filteredProducts = productsDetails.filter(product => product !== null);
+
+    res.status(200).json(filteredProducts);
+  } catch (error) {
+    console.error(error); 
+    res.status(400).json({ error: error.message });
+  }
+};
+exports.deleteProductUser = async(req, res, next) => {
   console.log(req.query.user_id);
-  UserProduct.find({ id_user: req.query.user_id})
-    .then((userProduct) => {
-      userProduct = userProduct.map((product) => {
-        return {id:product.id_product, name:product.name, description:product.description, price:product.price, image:product.image};
-      });
-      userProduct = userProduct.filter((product) => {
-        return product !== undefined;
-      });
-      
-      
-      res.status(200).json(userProduct)})
+  console.log(req.query.product_id);
+  UserProduct.deleteMany({  id_product: req.query.product_id})
+    .then(() => res.status(200).json({ message: 'Produit supprimé !'}))
     .catch(error => res.status(400).json({ error }));
 }
-
-
-//Fais la methode filter dans le front pour recuperer les produits

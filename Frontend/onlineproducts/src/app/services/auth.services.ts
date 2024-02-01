@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class AuthService {
+  
   static isRegisteredIn: boolean = false;
 
   register(msg: boolean): boolean {
@@ -27,23 +28,15 @@ export class AuthService {
   }
 
   logout(): void {
-    // Logique de déconnexion
-    // Réinitialiser l'état de connexion
     AuthService.isLoggedIn = false;
   }
 
   isAuthenticated(): String | boolean {
-    // Retourner l'état de connexion actuel
     let token = localStorage.getItem('token');
     if (token) {
-      // Split the token into header, payload, and signature
       const [header, payload, signature] = token.split('.');
-
-      // Decode the base64-encoded header and payload
       const decodedHeader = JSON.parse(atob(header));
       const decodedPayload = JSON.parse(atob(payload));
-
-      // Return the decoded header and payload
       return decodedPayload.userId;
       
     } else {
