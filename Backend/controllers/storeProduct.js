@@ -4,12 +4,8 @@ const fs = require("fs");
 
 
 exports.createProduct = (req, res, next) => {
- // const content = JSON.stringify(res.body, null, 4);
 console.log(req.body)
 
-  //const productObject = JSON.parse(req.body);
-  //delete productObject._id;
-  //delete productObject._userId;
   const product = new Product({
     title: req.body.title,
     description: req.body.description,
@@ -97,13 +93,6 @@ exports.getOneProduct = (req, res, next) => {
     
 exports.getAllProducts = (req, res, next) => {
   console.log("reqgfujyf");
-    /*Product.find()
-        .then((products) => {
-            products = products.filter((product) => product.verified == true);
-            console.log(products);
-            res.status(200).json(products);
-        })
-        .catch((error) => res.status(400).json({ error }));*/
         Product.find()
         .then((products) => {
           console.log("products", products);

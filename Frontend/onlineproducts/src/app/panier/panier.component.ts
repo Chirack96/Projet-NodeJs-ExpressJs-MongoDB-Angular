@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Products } from '../models/product.model';
 import { AuthService } from '../services/auth.services';
 import { AxiosService } from '../services/axios.service';
@@ -8,7 +9,7 @@ import { ProductsService } from '../services/product.services';
 @Component({
   selector: 'app-panier',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './panier.component.html',
   styleUrl: './panier.component.scss',
 })
@@ -66,5 +67,14 @@ export class PanierComponent implements OnInit {
         this.loadPanier();
       });
   }
+  increaseQuantity(product: any): void {
+    product.quantity++;
+  }
 
+  decreaseQuantity(product: any): void {
+    if (product.quantity > 1) {
+      product.quantity--;
+    }
+
+}
 }

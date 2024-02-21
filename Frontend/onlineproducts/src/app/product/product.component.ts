@@ -32,15 +32,13 @@ export class ProductComponent implements OnInit {
   addToCart(): void {
     if (this.isLoggedIn()) {
       this.panierService.createUserProduct(
-      this.authService.isAuthenticated().toString(),
-      this.product._id.toString()
+        this.authService.isAuthenticated().toString(),
+        this.product._id.toString(),
       );
-    }
-    else {
+    
+    } else {
       this.router.navigate(['/login']);
     }
-    
-  
   }
 
 

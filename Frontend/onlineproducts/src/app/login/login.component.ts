@@ -25,6 +25,7 @@ export class LoginComponent {
       .then((response) => {
         console.log(response.data);
         if (response.data.msg) this.router.navigate(['/home']);
+      
         
         const loginSuccessful = this.authService.login(response.data.msg);
         localStorage.setItem('token', response.data.token);

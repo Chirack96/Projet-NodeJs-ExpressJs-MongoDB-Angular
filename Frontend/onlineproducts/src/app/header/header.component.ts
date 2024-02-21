@@ -16,7 +16,6 @@ export class HeaderComponent {
     constructor(private authService: AuthService,@Inject(Router) private router: Router) {}
 
     isLoggedIn(): boolean {
-        //console.log(AuthService.isLoggedIn);
         return AuthService.isLoggedIn;
     }
 

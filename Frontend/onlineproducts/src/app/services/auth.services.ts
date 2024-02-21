@@ -17,9 +17,12 @@ export class AuthService {
   }
   static isLoggedIn: boolean = false;
 
-  login(msg: boolean): boolean {
+  login(msg: boolean, token?: string): boolean {
     if (msg) {
       AuthService.isLoggedIn = true;
+      if (token) {
+        localStorage.setItem('token', token);
+      }
       return true;
     } else {
       AuthService.isLoggedIn = false;
@@ -42,6 +45,5 @@ export class AuthService {
     } else {
       return false;
     }
-    // return AuthService.isLoggedIn;
   }
 }
