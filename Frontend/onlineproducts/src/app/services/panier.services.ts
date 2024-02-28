@@ -1,51 +1,52 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
-import { AuthService } from './auth.services';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PanierService {
   private apiUrl = 'http://localhost:3000';
-  static isInPanier: boolean = false;
 
   constructor() {}
-  authService: AuthService = new AuthService();
-  
-isInPanier(): boolean {
-  return PanierService.isInPanier;
-}
-  async createUserProduct(user_id: string, product_id: string,): Promise<any> {
-  
-    console.log(this.getUserProduct(user_id));
-    const productCreated = { user_id, product_id, };
-    console.log(productCreated);
-    await axios.post('http://localhost:3000/user-product/', productCreated)
-    .then((response) => {
-      console.log(response);
-      return response.data;
-      
-    }
-    )
 
+  async createUserProduct(user_id: string, product_id: string, quantity: number = 1): Promise<any> {
+    const response = await this.getUserProduct(user_id);
+    const panierProducts = response ? response : [];
+    const product = panierProducts.find((p: { product_id: string; }) => p.product_id === product_id);
+
+    if (product) {
+      // Si le produit existe déjà, mettre à jour la quantité
+      return this.updateProductQuantity(user_id, product_id, product.quantity + quantity);
+    } else {
+      // Sinon, créer un nouveau produit dans le panier
+      const productCreated = { user_id, product_id, quantity };
+      return axios.post(`${this.apiUrl}/user-product/`, productCreated)
+        .then(response => response.data)
+        .catch(error => error.response.data);
+    }
   }
+
+  async updateProductQuantity(user_id: string, product_id: string, quantity: number): Promise<any> {
+    return axios.put(`${this.apiUrl}/user-product/update`, { user_id, product_id, quantity })
+      .then(response => response.data)
+      .catch(error => error.response.data);
+  }
+
+  async clearUserCart(user_id: string): Promise<any> {
+    return axios.delete(`${this.apiUrl}/user-product/clear`, { params: { user_id } })
+      .then(response => response.data)
+      .catch(error => error.response.data);
+  }
+
   async getUserProduct(user_id: string): Promise<any> {
-    console.log(user_id);
-    const response_=await axios.get('http://localhost:3000/user-product/product',{
-      params: { user_id: user_id },
-    }).then((response) => {
-      console.log(response);
-      return response.data;
-    });
-    return response_;
-    
+    return axios.get(`${this.apiUrl}/user-product/product`, { params: { user_id } })
+      .then(response => response.data)
+      .catch(error => error.response.data);
   }
-  async deleteUserProduct(id: string): Promise<any> {
-    const response = await axios.delete('http://localhost:3000/user-product/delete', {
-      params: { product_id: id },
-      });
-    console.log(response);
-    return response;
-    return response.data;
+
+  async deleteUserProduct(product_id: string): Promise<any> {
+    return axios.delete(`${this.apiUrl}/user-product/delete`, { params: { product_id } })
+      .then(response => response.data)
+      .catch(error => error.response.data);
   }
 }

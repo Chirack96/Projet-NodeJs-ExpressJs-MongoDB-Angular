@@ -1,14 +1,16 @@
 <div class="cart-container">
     <h2>Mon Panier</h2>
     <div class="products-card" *ngFor="let product of panierProducts">
-        <h2>{{product.title.toString() | uppercase}}</h2>
+        <h2>{{product.title | uppercase}}</h2>
         <img [src]="product.image" [alt]="product.title">
         <p>{{product.price}} €</p>
-        <p>{{product.quantity}}</p>
-        <p>
-            <button (click)="removeProductFromCart(product.id)">Remove to cart</button>
-        </p>
-            
+        <div class="quantity-controls">
+            <button (click)="decreaseQuantity(product.id)">-</button>
+            {{product.quantity}}
+            <button (click)="increaseQuantity(product.id)">+</button>
         </div>
+        <p>
+            <button (click)="removeProductFromCart(product.id)">Retirer du panier</button>
+        </p>
+    </div>
 </div>
-

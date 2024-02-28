@@ -1,5 +1,6 @@
 const UserProduct = require('../models/UserProduct');
 const Product = require('../models/Product');
+
 exports.getAllUserProduct = async(req, res, next) => {
     console.log("get all user product");
   UserProduct.find()
@@ -8,9 +9,22 @@ exports.getAllUserProduct = async(req, res, next) => {
 }
 
 exports.createUSerProduct = async(req, res, next) => {
+
+  UserProduct.findOne({ id_user: req.body.user_id, id_product: req.body.product_id })
+    .then(existingProduct => {
+      if (existingProduct) {
+        return UserProduct.updateOne(
+          { _id: existingProduct._id },
+          { $inc: { quantity: req.body.quantity } }
+        ).then(() => {
+          res.status(200).json({ message: 'Quantité mise à jour avec succès !' });
+          console.log('Quantité mise à jour avec succès !');
+        });
+      } else {
   const userProduct = new UserProduct({
     id_user: req.body.user_id,
     id_product: req.body.product_id,
+    quantity: req.body.quantity
   });
   console.log("userProduct", userProduct);
   userProduct.save()
@@ -19,6 +33,8 @@ exports.createUSerProduct = async(req, res, next) => {
   
   })
     .catch(error => {res.status(400).json({ error });console.log(error)});
+}
+})
 }
 
 exports.getProductUser = async (req, res, next) => {
@@ -36,7 +52,8 @@ exports.getProductUser = async (req, res, next) => {
         title: productDetails.title,
         description: productDetails.description,
         price: productDetails.price,
-        image: productDetails.imageUrl
+        image: productDetails.imageUrl,
+        quantity: product.quantity,
       };
     }));
 
@@ -52,7 +69,28 @@ exports.getProductUser = async (req, res, next) => {
 exports.deleteProductUser = async(req, res, next) => {
   console.log(req.query.user_id);
   console.log(req.query.product_id);
-  UserProduct.deleteMany({  id_product: req.query.product_id})
+  UserProduct.deleteOne({  id_product: req.query.product_id})
     .then(() => res.status(200).json({ message: 'Produit supprimé !'}))
     .catch(error => res.status(400).json({ error }));
+}
+
+exports.updateProductUser = async(req, res, next) => {
+  console.log(req.query.user_id);
+  console.log(req.query.product_id);
+  UserProduct.findOne({ id_user: req.query.user_id, id_product: req.query.product_id })
+    .then(existingProduct => {
+      if (existingProduct) {
+        return
+        UserProduct.updateOne(
+          { _id: existingProduct._id },
+          { $set: { quantity: req.body.quantity } }
+        ).then(() => {
+          res.status(200).json({ message: 'Quantité mise à jour avec succès !' });
+          console.log('Quantité mise à jour avec succès !');
+        });
+      }
+    }
+    )
+    .catch(error => res.status(400).json({ error }));
+
 }

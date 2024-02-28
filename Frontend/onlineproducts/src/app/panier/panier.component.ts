@@ -24,9 +24,8 @@ export class PanierComponent implements OnInit {
   ngOnInit(): void {
     this.loadPanier();
   }
-  isInPanier(): boolean {
-    return PanierService.isInPanier;
-  }
+  
+
   loadPanier(): void {
     let token = this.authService.isAuthenticated();
     console.log(token);
@@ -67,14 +66,44 @@ export class PanierComponent implements OnInit {
         this.loadPanier();
       });
   }
-  increaseQuantity(product: any): void {
-    product.quantity++;
+  clearCart(): void {
+    this.panierService.clearUserCart(this.authService.isAuthenticated().toString());
   }
 
-  decreaseQuantity(product: any): void {
-    if (product.quantity > 1) {
-      product.quantity--;
-    }
-
+  increaseQuantity(productId: string): void {
+  // Trouver le produit dans le panier
+  const product = this.panierProducts.find(p => p.id_product === productId);
+  if (product) {
+    // Augmenter la quantité de 1
+    this.panierService.updateProductQuantity(this.authService.isAuthenticated().toString(), productId, product.quantity + 1)
+      .then(() => {
+        // Recharger le panier après mise à jour
+        this.loadPanier();
+      });
+  }
 }
+
+decreaseQuantity(productId: string): void {
+  // Trouver le produit dans le panier
+  const product = this.panierProducts.find(p => p.id_product === productId);
+  if (product && product.quantity > 1) { // Empêcher la quantité d'atteindre 0
+    // Diminuer la quantité de 1
+    this.panierService.updateProductQuantity(this.authService.isAuthenticated().toString(), productId, product.quantity - 1)
+      .then(() => {
+        // Recharger le panier après mise à jour
+        this.loadPanier();
+      });
+  }
+}
+
+  getTotalPrice(): number {
+    return this.panierProducts.reduce((acc, product) => acc + product.price, 0);
+  }
+  getQuantity(): number {
+    return this.panierProducts.reduce((acc, product) => acc + product.quantity, 0);
+  }
+  getSubTotalPrice(): number {
+    return this.panierProducts.reduce((acc, product) => acc + product.price * product.quantity, 0);
+  }
+  
 }
