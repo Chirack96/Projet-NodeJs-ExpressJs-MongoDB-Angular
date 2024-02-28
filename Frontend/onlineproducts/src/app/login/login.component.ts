@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import axios from 'axios';
@@ -11,12 +11,19 @@ import { AxiosService } from '../services/axios.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   username: string = '';
   password: string = '';
   authService: AuthService = new AuthService();
 
   constructor(@Inject(Router) private router: Router, private axiosService: AxiosService) {}
+
+  ngOnInit() {
+    if (AuthService.isLoggedIn) {
+      this.router.navigate(['/home']);
+    }
+  }
+
 
   onSubmit(): void {
     let loginData = { username: this.username, password: this.password };

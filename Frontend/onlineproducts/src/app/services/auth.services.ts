@@ -17,6 +17,15 @@ export class AuthService {
   }
   static isLoggedIn: boolean = false;
 
+  constructor() {
+    AuthService.checkInitialLoginState();
+  }
+
+  static checkInitialLoginState() {
+    const token = localStorage.getItem('token');
+    AuthService.isLoggedIn = !!token;
+  }
+
   login(msg: boolean, token?: string): boolean {
     if (msg) {
       AuthService.isLoggedIn = true;
