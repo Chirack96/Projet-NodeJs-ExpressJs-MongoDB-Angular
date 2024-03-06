@@ -1,62 +1,43 @@
 .cart-container {
-    width: 35%;
-
-
+    padding: 20px;
+    max-width: 100%;
 }
 
-.products-card {
-    box-sizing: content-box;
-    width: 40%;
-    margin: 50px auto;
-    padding: 10px 30px;
-    box-shadow: lightgray 4px 4px 20px;
+nz-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+nz-col {
+    margin-bottom: 20px;
+    width: 18rem;
+    margin-left: 20px;
+    margin-right: auto;
+}
+.product-card {
+    width: 100%;
+    :hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }   
+    border-radius: 8px;
+}
+.product-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.action-controls {
+    display: flex;
     justify-content: center;
-
-    img {
-        width: 100%;
-        height: auto;
-        object-fit: cover;
-        margin-bottom: 20px;
-    }
-
-    h2 {
-        margin-bottom: 0;
-    }
-
-    p {
-        font-weight: 300;
-        font-size: 16px;
-    }
-
-
-    button {
-        background-color: transparent;
-        box-sizing: border-box;
-        padding: 5px 10px;
-        border: none;
-        box-shadow: lightgray 3px 3px 7px;
-        margin-right: 20px;
-        outline: none;
-        font-size: 14px;
-        font-weight: 500;
-
-        &:active {
-            transform: translate(1px, 1px);
-            box-shadow: lightgray 0 0 5px;
-        }
-    }
+    gap: 10px;
+    align-items: center;
 }
 
-.snapped {
-    background-color: rgba(lightgreen, 0.4);
-    color: darkgreen;
 
-    button {
-        box-shadow: lightgreen 3px 3px 7px;
-        color: darkgreen;
-
-        &:active {
-            box-shadow: lightgreen 0 0 5px;
-        }
-    }
+.quantity-btn,
+.remove-btn {
+  margin-bottom: 5px;
 }

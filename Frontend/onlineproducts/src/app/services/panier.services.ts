@@ -16,21 +16,24 @@ export class PanierService {
 
     if (product) {
       // Si le produit existe déjà, mettre à jour la quantité
-      return this.updateProductQuantity(user_id, product_id, product.quantity + quantity);
+      return this.updateProductQuantity(user_id, product_id, product.quantity + 1);
     } else {
       // Sinon, créer un nouveau produit dans le panier
       const productCreated = { user_id, product_id, quantity };
       return axios.post(`${this.apiUrl}/user-product/`, productCreated)
         .then(response => response.data)
         .catch(error => error.response.data);
+        console.log(productCreated);
     }
   }
 
   async updateProductQuantity(user_id: string, product_id: string, quantity: number): Promise<any> {
-    return axios.put(`${this.apiUrl}/user-product/update`, { user_id, product_id, quantity })
-      .then(response => response.data)
-      .catch(error => error.response.data);
-  }
+  return axios.put(`${this.apiUrl}/user-product/update/`, { user_id, product_id, quantity })
+    .then(response => response.data)
+    .catch(error => error.response.data);
+    console.log(user_id, product_id, quantity);
+}
+
 
   async clearUserCart(user_id: string): Promise<any> {
     return axios.delete(`${this.apiUrl}/user-product/clear`, { params: { user_id } })

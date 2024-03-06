@@ -1,16 +1,20 @@
 <div class="cart-container">
     <h2>Mon Panier</h2>
-    <div class="products-card" *ngFor="let product of panierProducts">
-        <h2>{{product.title | uppercase}}</h2>
-        <img [src]="product.image" [alt]="product.title">
-        <p>{{product.price}} €</p>
-        <div class="quantity-controls">
-            <button (click)="decreaseQuantity(product.id)">-</button>
-            {{product.quantity}}
-            <button (click)="increaseQuantity(product.id)">+</button>
-        </div>
-        <p>
-            <button (click)="removeProductFromCart(product.id)">Retirer du panier</button>
-        </p>
-    </div>
+    <nz-row nzGutter="16">
+        <nz-col nzSpan="24" *ngFor="let product of panierProducts">
+            <nz-card nzHoverable class="product-card">
+                <img [src]="product.image" alt="{{product.title}}" class="product-image">
+                <p class="card-text">{{product.price}} €</p>
+                <div class="action-controls">
+                    <button nz-button nzShape="circle" class="quantity-btn"
+                        (click)="decreaseQuantity(product.id_product)">-</button>
+                    <span class="quantity">{{product.quantity}}</span>
+                    <button nz-button nzShape="circle" class="quantity-btn"
+                        (click)="increaseQuantity(product.id_product)">+</button>
+                    <button nz-button nzType="primary" class="remove-btn"
+                        (click)="removeProductFromCart(product.id)">Retirer du panier</button>
+                </div>
+            </nz-card>
+        </nz-col>
+    </nz-row>
 </div>

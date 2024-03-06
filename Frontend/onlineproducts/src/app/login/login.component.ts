@@ -1,45 +1,72 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
 import axios from 'axios';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzNotificationModule, NzNotificationService } from 'ng-zorro-antd/notification';
 import { AuthService } from '../services/auth.services';
 import { AxiosService } from '../services/axios.service';
+
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule],
+  imports: [ReactiveFormsModule, NzFormModule, NzInputModule, NzCheckboxModule, NzButtonModule, RouterModule, NzNotificationModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss',
+  styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit{
-  username: string = '';
-  password: string = '';
-  authService: AuthService = new AuthService();
+export class LoginComponent implements OnInit {
+  validateForm!: FormGroup;
 
-  constructor(@Inject(Router) private router: Router, private axiosService: AxiosService) {}
+  constructor(
+    private fb: FormBuilder, 
+    @Inject(Router) private router: Router, 
+    private authService: AuthService,
+    private axiosService: AxiosService,
+    private notification: NzNotificationService
+  ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (AuthService.isLoggedIn) {
       this.router.navigate(['/home']);
     }
+
+    this.validateForm = this.fb.group({
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+      remember: [true],
+    });
   }
 
-
   onSubmit(): void {
-    let loginData = { username: this.username, password: this.password };
-    axios
-      .post(`http://localhost:3000/auth/login`, loginData)
-      .then((response) => {
-        console.log(response.data);
-        if (response.data.msg) this.router.navigate(['/home']);
+    if (this.validateForm.valid) {
+      const { username, password } = this.validateForm.value;
+      const loginData = { username, password };
       
-        
-        const loginSuccessful = this.authService.login(response.data.msg);
-        localStorage.setItem('token', response.data.token);
-        return response.data.msg;
-      })
-      .catch((error) => {
-        console.error(error.response.data);
+      axios.post(`http://localhost:3000/auth/login`, loginData)
+        .then(response => {
+          console.log(response.data);
+          if (response.data.msg) {
+            this.notification.create('success', 'Login Successful', `Welcome back ${username}!`);
+            this.authService.login(response.data.token);
+            localStorage.setItem('token', response.data.token);
+            this.router.navigate(['/home']);
+
+          }
+        })
+        .catch(error => {
+          this.notification.create('error', 'Login Failed', 'Invalid username or password');
+          console.error(error.response.data);
+        });
+    } else {
+      Object.values(this.validateForm.controls).forEach(control => {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+        }
       });
+    }
   }
 }

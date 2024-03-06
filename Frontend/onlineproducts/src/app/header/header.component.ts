@@ -1,14 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { ProductListComponent } from '../product-list/product-list.component';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+
 import { AuthService } from '../services/auth.services';
 @Component({
     selector: 'app-header',
-    standalone: true,
-    imports: [CommonModule, RouterModule, ProductListComponent],
     templateUrl: './header.component.html',
-    styleUrl: './header.component.scss'
+    standalone: true,
+    imports: [RouterModule, CommonModule, NzAvatarModule, NzToolTipModule],
+    styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
     test=new AuthService;

@@ -1,14 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzCardModule } from 'ng-zorro-antd/card';
 import { Products } from '../models/product.model';
 import { AuthService } from '../services/auth.services';
 import { PanierService } from '../services/panier.services';
-
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NzButtonModule, NzCardModule],
   templateUrl: './product.component.html',
   styleUrl: './product.component.scss'
 })
@@ -40,8 +41,26 @@ export class ProductComponent implements OnInit {
       this.router.navigate(['/login']);
     }
   }
+isLoadingOne = false;
+  isLoadingTwo = false;
+
+  loadOne(): void {
+    this.isLoadingOne = true;
+    setTimeout(() => {
+      this.isLoadingOne = false;
+    }, 300);
+  }
+
+  loadTwo(): void {
+    this.isLoadingTwo = true;
+    setTimeout(() => {
+      this.isLoadingTwo = false;
+    }, 5000);
+  }
 
 
 }
+
+  
 
 

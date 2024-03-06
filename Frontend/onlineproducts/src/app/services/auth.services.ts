@@ -55,4 +55,15 @@ export class AuthService {
       return false;
     }
   }
+  getUsername(): String | boolean {
+    let token = localStorage.getItem('token');
+    if (token) {
+      const [header, payload, signature] = token.split('.');
+      const decodedHeader = JSON.parse(atob(header));
+      const decodedPayload = JSON.parse(atob(payload));
+      return decodedPayload.username;
+    } else {
+      return false;
+    }
+  }
 }

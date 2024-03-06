@@ -11,14 +11,15 @@ exports.getAllUserProduct = async(req, res, next) => {
 exports.createUSerProduct = async(req, res, next) => {
 
   UserProduct.findOne({ id_user: req.body.user_id, id_product: req.body.product_id })
-    .then(existingProduct => {
-      if (existingProduct) {
+    .then(userProduct => {
+      if (userProduct) {
         return UserProduct.updateOne(
-          { _id: existingProduct._id },
-          { $inc: { quantity: req.body.quantity } }
+          { _id: userProduct._id },
+          { $inc: { quantity: req.body.quantity++ } }
         ).then(() => {
           res.status(200).json({ message: 'Quantité mise à jour avec succès !' });
           console.log('Quantité mise à jour avec succès !');
+          console.log(userProduct);
         });
       } else {
   const userProduct = new UserProduct({
@@ -74,23 +75,23 @@ exports.deleteProductUser = async(req, res, next) => {
     .catch(error => res.status(400).json({ error }));
 }
 
-exports.updateProductUser = async(req, res, next) => {
-  console.log(req.query.user_id);
-  console.log(req.query.product_id);
-  UserProduct.findOne({ id_user: req.query.user_id, id_product: req.query.product_id })
-    .then(existingProduct => {
-      if (existingProduct) {
-        return
-        UserProduct.updateOne(
-          { _id: existingProduct._id },
-          { $set: { quantity: req.body.quantity } }
-        ).then(() => {
-          res.status(200).json({ message: 'Quantité mise à jour avec succès !' });
-          console.log('Quantité mise à jour avec succès !');
-        });
-      }
-    }
-    )
-    .catch(error => res.status(400).json({ error }));
+exports.updateProductUser = async (req, res, next) => {
+  const { user_id, product_id, quantity } = req.body;
+  console.log('Mise à jour demandée pour', { user_id, product_id, quantity });
 
-}
+  try {
+    const existingProduct = await UserProduct.findOne({ id_user: user_id, id_product: product_id, });
+    if (existingProduct) {
+      await UserProduct.updateOne({ _id: existingProduct._id }, { $set: { quantity: quantity } });
+      console.log('Quantité mise à jour avec succès !', { quantity });
+      res.status(200).json({ message: 'Quantité mise à jour avec succès !' });
+    } else {
+      console.log('Produit non trouvé.');
+      res.status(404).json({ message: 'Produit non trouvé.' });
+    }
+  } catch (error) {
+    console.error('Erreur lors de la mise à jour', error);
+    res.status(400).json({ error });
+  }
+};
+

@@ -1,12 +1,5 @@
-.container {
-    display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-        grid-gap: 10px;
-        
-}
-.container2{
-    display: grid;
-        grid-template-columns: 85% 15%;
-        grid-gap: 10px;
-        margin-top: 50px;
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
 }
