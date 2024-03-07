@@ -1,29 +1,38 @@
-<header class="p-3 mb-2 bg-dark text-white">
-    <ul class="nav nav-pills flex-column flex-sm-row">
-        <li class="nav-item">
-            <a class="nav-link" aria-current="page" routerLink="/">Home</a>
-        </li>
-        <li *ngIf="!isLoggedIn()" class="nav-item">
-            <a class="nav-link" a routerLink="/login">Login</a>
-        </li>
-        <li *ngIf="!isLoggedIn()" class="nav-item">
-            <a class="nav-link" routerLink="/inscription">Register</a>
-        </li>
-        <li *ngIf="isLoggedIn()" class="nav-item">
-            <a class="nav-link" routerLink="/addproduct">Add a product</a>
-        </li>
-        <li *ngIf="isLoggedIn()" class="nav-item">
-            <a class="nav-link" routerLink="/panier">Cart</a>
-        </li>
-        <li *ngIf="isLoggedIn()" (click)="logout()" class="nav-item">
-            <a class="nav-link" routerLink="/panier">Logout</a>
-        </li>
-    <li *ngIf="isLoggedIn()" class="nav-item d-flex align-items-center">
-        <nz-avatar nz-tooltip nzIcon="user" style="background-color: #87d068;"></nz-avatar>
-        <span style="margin-left: 10px;"></span>
-    </li>
-
-    </ul>
-</header>
-
-<router-outlet></router-outlet>
+<nz-layout class="layout-header custom">
+    <nz-header>
+        <div nz-row>
+            <div nz-col nzSpan="24">
+                <ul nz-menu nzTheme="" nzMode="horizontal">
+                    <li nz-menu-item>
+                        <a routerLink="/home">Home</a>
+                    </li>
+                    <li nz-menu-item *ngIf="!isLoggedIn()">
+                        <a routerLink="/login">Login</a>
+                    </li>
+                    <li nz-menu-item *ngIf="!isLoggedIn()">
+                        <a routerLink="/register">Register</a>
+                    </li>
+                    <li nz-menu-item *ngIf="isLoggedIn()">
+                        <a routerLink="/addproduct">Add Product</a>
+                    </li>
+                    <li nz-menu-item *ngIf="isLoggedIn()">
+                        <a routerLink="/panier">
+                            <nz-avatar nz-tooltip nzIcon="shopping-cart" nzTheme="outline"
+                            style="background-color: #87d068;">
+                            </nz-avatar>
+                        </a>
+                        
+                    </li>
+                    <li nz-menu-item *ngIf="isLoggedIn()">
+                        <nz-avatar nz-tooltip nzIcon="user" nzTheme="outline"
+                            style="background-color: #87d068;">
+                        </nz-avatar>
+                    </li>
+                    <li nz-menu-item *ngIf="isLoggedIn()">
+                        <a (click)="logout()" routerLink="/login">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nz-header>
+</nz-layout>

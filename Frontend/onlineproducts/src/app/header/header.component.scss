@@ -1,23 +1,62 @@
-header {
-
-    padding: 10px;
+.layout-header nz-header {
+    background: darkgrey;
+    /* Couleur de fond sombre pour l'en-tête */
+    padding: 0 15px;
+    /* Ajout de padding pour ne pas coller sur les bords */
     
 }
 
-/*header ul {
+.custom {
+    margin-bottom: 50px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.layout-header [nz-menu] {
+    line-height: 64px;
+    /* Hauteur de ligne pour centrer verticalement le texte dans les items */
+    display: flex;
+    /* Assure que le menu utilise un affichage flex */
+    justify-content: left;
+    /* Centre les éléments du menu horizontalement */
+    flex-wrap: wrap;
+    /* Permet aux éléments du menu de passer à la ligne sur de petits écrans */
+}
+
+.layout-header [nz-menu] li {
+    margin: 0 10px;
+    /* Espacement entre les éléments du menu */
+}
+
+/* Styles supplémentaires pour les avatars dans le menu pour une meilleure visibilité */
+.layout-header [nz-menu] nz-avatar {
+    background-color: #87d068 !important;
+    /* Assure que le style inline est surchargé si nécessaire */
+}
+
+@media (max-width: 768px) {
+
+    /* Adaptations pour les écrans plus petits */
+    .layout-header [nz-menu] {
+        justify-content: start;
+        /* Aligner les éléments du menu à gauche sur les petits écrans */
+    }
+        .layout-header [nz-menu] li {
+            margin: 10px 8px;
+            /* Espacement entre les éléments du menu */
+            justify-content: left;
+        }
+        .custom nz-header ul[nz-menu] {
+  list-style-type: none; /* Supprime le style de liste par défaut */
+  padding-left: 0; /* Supprime le padding à gauche pour aligner correctement les éléments du menu */
+}
+
+}
+.custom nz-header ul[nz-menu] {
     list-style-type: none;
-    margin: 0;
-    padding: 0;
-}*/
-
-/*header ul li {
-    display: inline-block;
-    margin-right: 15px;
-    
-}*/
-
-header ul li a {
-    color: white;
-    text-decoration: none;
+    /* Supprime le style de liste par défaut */
+    padding-left: 0;
+    /* Supprime le padding à gauche pour aligner correctement les éléments du menu */
     font-weight: bold;
+    /* Ajoute une police en gras pour les éléments du menu */
 }

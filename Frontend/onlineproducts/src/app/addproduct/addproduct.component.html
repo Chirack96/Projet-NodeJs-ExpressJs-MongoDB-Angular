@@ -1,18 +1,42 @@
-<form (ngSubmit)="onSubmit()">
-    <label for="title">Title:</label>
-    <input type="text" id="title" [(ngModel)]="newProduct.title" name="title" required>
+<div class="form-container">
+    <form nz-form [formGroup]="validateForm" (ngSubmit)="onSubmit()">
+        <div nz-row class="form-row">
+            <nz-form-label nz-col nzSpan="8" [nzFor]="'title'" nzRequired>Title</nz-form-label>
+            <nz-form-control nz-col nzSpan="16">
+                <input nz-input formControlName="title" placeholder="Enter title">
+            </nz-form-control>
+        </div>
 
-    <label for="description">Description:</label>
-    <textarea id="description" [(ngModel)]="newProduct.description" name="description" required></textarea>
+        <div nz-row class="form-row">
+            <nz-form-label nz-col nzSpan="8" [nzFor]="'description'" nzRequired>Description</nz-form-label>
+            <nz-form-control nz-col nzSpan="16">
+                <textarea nz-input formControlName="description" placeholder="Enter description"></textarea>
+            </nz-form-control>
+        </div>
 
-    <label for="imageUrl">Image URL:</label>
-    <input type="file" (change)="onFileSelected($event)"  id="imageUrl"/>
+        <div nz-row class="form-row">
+            <nz-form-label nz-col nzSpan="8" [nzFor]="'imageUrl'">Image URL</nz-form-label>
+            <nz-form-control nz-col nzSpan="16">
+                <input type="file" (change)="onFileSelected($event)" placeholder="Choose an image">
+            </nz-form-control>
+        </div>
 
-    <label for="price">Price:</label>
-    <input type="number" id="price" [(ngModel)]="newProduct.price" name="price" required>
+        <div nz-row class="form-row">
+            <nz-form-label nz-col nzSpan="8" [nzFor]="'price'" nzRequired>Price</nz-form-label>
+            <nz-form-control nz-col nzSpan="16">
+                <input nz-input type="number" formControlName="price" placeholder="Enter price">
+            </nz-form-control>
+        </div>
 
-    <label for="quantity">Quantity:</label>
-    <input type="number" id="quantity" [(ngModel)]="newProduct.quantity" name="quantity" required>
+        <div nz-row class="form-row">
+            <nz-form-label nz-col nzSpan="8" [nzFor]="'quantity'" nzRequired>Quantity</nz-form-label>
+            <nz-form-control nz-col nzSpan="16">
+                <input nz-input type="number" formControlName="quantity" placeholder="Enter quantity">
+            </nz-form-control>
+        </div>
 
-    <button type="submit">Submit</button>
-</form>
+        <div class="form-row submit-row">
+            <button nz-button nzType="primary" type="submit">Submit</button>
+        </div>
+    </form>
+</div>
