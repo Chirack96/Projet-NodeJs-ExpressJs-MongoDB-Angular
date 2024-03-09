@@ -35,8 +35,8 @@ export class InscriptionComponent implements OnInit {
 
   onSubmit(): void {
     if (this.validateForm.valid) {
-      const { username, password } = this.validateForm.value;
-      const registrationData = { username, password };
+      const { username, password, email } = this.validateForm.value;
+      const registrationData = { username, password, email };
 
       axios.post('http://localhost:3000/auth/signup', registrationData)
         .then((response) => {

@@ -31,6 +31,9 @@
                     <li nz-menu-item *ngIf="isLoggedIn()">
                         <a (click)="logout()" routerLink="/login">Logout</a>
                     </li>
+                    <li nz-menu-item *ngIf="isLoggedIn()">
+                        <a routerLink="/adminpannel">Admin Pannel</a>
+                    </li>
                 </ul>
             </div>
         </div>

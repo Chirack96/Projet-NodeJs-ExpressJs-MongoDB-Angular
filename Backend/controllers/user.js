@@ -17,6 +17,7 @@ exports.signup =  async(req, res, next) => {
         username: req.body.username,
         //password: req.body.password
         password: hash,
+        email: req.body.email,
       });
       console.log(user);
      await  user
@@ -72,4 +73,31 @@ exports.getCurrentUser = (req, res, next) => {
     .then((user) => res.status(200).json(user))
     .catch((error) => res.status(400).json({ error }));
 };
+
+exports.resetPassword = (req, res) => {
+  const { username, newPassword, confirmPassword } = req.body;
+
+  // Validation basique côté serveur (à étendre selon les besoins)
+  if (newPassword !== confirmPassword) {
+    return res.status(400).json({ error: "Les mots de passe ne correspondent pas !" });
+  }
+
+  User.findOne({ username })
+    .then(user => { console.log(username, newPassword, confirmPassword, user);
+      if (!user) {
+        return res.status(404).json({ error: "Utilisateur non trouvé !" });
+        console.log("Utilisateur non trouvé !");
+      }
+
+      bcrypt.hash(newPassword, 10)
+        .then(hash => {
+          user.password = hash;
+          user.save()
+            .then(() => res.status(200).json({ message: "Mot de passe réinitialisé avec succès !" }))
+            .catch(error => res.status(400).json({ error }));
+        })
+        .catch(error => res.status(500).json({ error: "Erreur lors du hashage du mot de passe" }));
+    })
+    .catch(error => res.status(500).json({ error: "Erreur lors de la recherche de l'utilisateur" }));
+}
 

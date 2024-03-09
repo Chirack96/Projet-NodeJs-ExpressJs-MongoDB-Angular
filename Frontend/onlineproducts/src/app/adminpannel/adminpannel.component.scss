@@ -1,0 +1,45 @@
+.table-container {
+    width: auto;
+    margin: auto;
+    /* Centre le tableau horizontalement */
+}
+
+.nz-table {
+    /* Couleurs des en-têtes de tableau */
+    --header-bgcolor: #007bff;
+    /* Couleur de fond des en-têtes */
+    --header-color: #ffffff;
+    /* Couleur du texte des en-têtes */
+}
+
+.nz-table-thead>tr>th {
+    background-color: var(--header-bgcolor);
+    color: var(--header-color);
+}
+
+/* Styles pour les lignes du tableau */
+.nz-table-tbody>tr:nth-child(odd)>td {
+    background-color: #f0f0f0;
+    /* Couleur pour les lignes impaires */
+}
+
+.nz-table-tbody>tr:nth-child(even)>td {
+    background-color: #ffffff;
+    /* Couleur pour les lignes paires */
+}
+
+/* Espacement et styles pour les boutons */
+button[nz-button] {
+    margin-right: 8px;
+}
+
+/* Styles pour les inputs lors de l'édition */
+input[nz-input] {
+    margin-bottom: 4px;
+    /* Espacement sous les inputs */
+}
+
+/* Assurez-vous que le tableau s'étend pleinement dans son conteneur */
+.nz-table {
+    width: 100%;
+}

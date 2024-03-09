@@ -8,5 +8,6 @@ router.post('/signup', userCtrl.signup);
 router.post('/login', userCtrl.login);
 router.get('/auth/users', auth, userCtrl.getAllUsers);
 router.get('/auth/current', auth, userCtrl.getCurrentUser);
+router.post('/reset', userCtrl.resetPassword);
 
 module.exports = router;
