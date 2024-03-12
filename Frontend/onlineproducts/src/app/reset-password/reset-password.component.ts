@@ -26,35 +26,27 @@ import { NzNotificationModule, NzNotificationService } from 'ng-zorro-antd/notif
 
   ngOnInit(): void {
     this.resetForm = this.fb.group({
-      username: ['', [Validators.required]],
-      newPassword: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required]]
-    }, { validator: this.checkPasswords });
-  }
-
-  checkPasswords(group: FormGroup) { // here we have the 'passwords' group
-    const pass = group.get('newPassword')?.value;
-    const confirmPass = group.get('confirmPassword')?.value;
-    return pass === confirmPass ? null : { notSame: true };
+      email: ['', [Validators.required]],
+    });
   }
 
   onSubmit(): void {
     console.log(this.resetForm.value);
     if (this.resetForm.valid) {
-      axios.post('http://localhost:3000/auth/reset', this.resetForm.value)
+      axios.post('http://localhost:3000/auth/request-reset-password', this.resetForm.value)
         .then(response => {
           this.notification.create(
             'success',
-            'Réinitialisation Réussie',
-            response.data.message
+            'Demande de Réinitialisation Envoyée',
+            'Un email de réinitialisation de mot de passe a été envoyé si l\'adresse est associée à un compte.'
           );
           this.router.navigate(['/login']);
         })
         .catch(error => {
           this.notification.create(
             'error',
-            'Erreur de Réinitialisation',
-            error.response.data.error
+            'Erreur de Demande de Réinitialisation',
+            error.response.data.error || 'Une erreur est survenue, veuillez réessayer.'
           );
         });
     }

@@ -5,6 +5,8 @@ const userSchema = mongoose.Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   admin: { type: Boolean, default: false },
+  resetPasswordToken: { type: String, default: "" },
+resetPasswordExpires: { type: Date, default: Date.now },
 });
 //userSchema.plugin(uniqueValidator);
 module.exports = mongoose.model("User", userSchema);
