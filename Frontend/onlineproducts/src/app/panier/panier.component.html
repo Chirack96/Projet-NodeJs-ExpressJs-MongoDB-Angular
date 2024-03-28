@@ -8,14 +8,28 @@
                 <p class="card-text">{{product.price}} €</p>
                 <div class="action-controls">
                     <button nz-button nzShape="circle" class="quantity-btn"
-                        (click)="decreaseQuantity(product.id_product)">-</button>
+                        (click)="decreaseQuantity(product.id)">-</button>
                     <span class="quantity">{{product.quantity}}</span>
                     <button nz-button nzShape="circle" class="quantity-btn"
-                        (click)="increaseQuantity(product.id_product)">+</button>
+                        (click)="increaseQuantity(product.id)">+</button>
+                </div>
+                <div class="footer-controls">
+                    <p class="sub-total-text">Total: {{product.price * product.quantity}} €</p>
                     <button nz-button nzType="primary" class="remove-btn"
                         (click)="removeProductFromCart(product.id)">Retirer du panier</button>
                 </div>
             </nz-card>
         </nz-col>
     </nz-row>
+    <div *ngIf="panierProducts.length > 0" class="checkout-controls">
+        <div class="total-price">Prix Total : {{ getTotalPrice() }} €</div>
+        <button nz-button nzType="primary" class="pay-btn" (click)="payment()">
+            {{ getPaymentButtonText() }}
+        </button>
+
+
+    </div>
+    <ng-template #emptyCart>
+        <div *ngIf="panierProducts.length === 0" class="empty-cart-message">Votre panier est vide.</div>
+    </ng-template>
 </div>

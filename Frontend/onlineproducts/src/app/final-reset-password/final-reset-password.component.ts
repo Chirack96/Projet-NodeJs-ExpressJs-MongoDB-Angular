@@ -41,10 +41,11 @@ this.resetForm = this.fb.group({
   }
 
   onSubmit(): void {
-    console.log(this.resetForm.value);
-    console.log(this.resetForm.value.newPassword);
+    this.token =   this.route.snapshot.paramMap.get('token') ||''
+    console.log(this.token);
+    
     if (this.resetForm.valid && this.token) {
-      axios.post(`http://localhost:3000/auth/reset/${this.token}`,this.resetForm.value.newPassword)
+      axios.post(`http://localhost:3000/auth/reset/${this.token}`,this.resetForm.value)
         .then(response => {
           console.log(response);
           this.notification.create(
@@ -61,6 +62,9 @@ this.resetForm = this.fb.group({
             'Une erreur s\'est produite lors de la réinitialisation de votre mot de passe. Veuillez réessayer.'
           );
         });
+    }
+    else{
+      console.log('Invalid form');
     }
   }
 

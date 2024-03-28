@@ -10,7 +10,7 @@ import { ProductsService } from '../services/product.services';
     standalone: true,
     templateUrl: './product-list.component.html',
     styleUrl: './product-list.component.scss',
-    imports: [CommonModule, ProductComponent, NzGridModule, NzPaginationModule]
+    imports: [CommonModule, ProductComponent, NzGridModule, NzPaginationModule,]
 })
 export class ProductListComponent implements OnInit {
   pageIndex = 1;

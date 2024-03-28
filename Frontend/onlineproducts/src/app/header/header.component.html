@@ -2,24 +2,27 @@
     <nz-header>
         <div nz-row>
             <div nz-col nzSpan="24">
+                <div class="logo">
+                </div>
                 <ul nz-menu nzTheme="" nzMode="horizontal">
                     <li nz-menu-item>
-                        <a routerLink="/home">Home</a>
+                        <a style="color: white !important;" routerLink="/home">Home</a>
                     </li>
                     <li nz-menu-item *ngIf="!isLoggedIn()">
-                        <a routerLink="/login">Login</a>
+                        <a style="color: white !important;" routerLink="/login">Login</a>
                     </li>
                     <li nz-menu-item *ngIf="!isLoggedIn()">
-                        <a routerLink="/register">Register</a>
+                        <a style="color: white !important;" routerLink="/inscription">Register</a>
                     </li>
                     <li nz-menu-item *ngIf="isLoggedIn()">
-                        <a routerLink="/addproduct">Add Product</a>
+                        <a style="color: white !important;" routerLink="/addproduct">Add Product</a>
                     </li>
                     <li nz-menu-item *ngIf="isLoggedIn()">
                         <a routerLink="/panier">
-                            <nz-avatar nz-tooltip nzIcon="shopping-cart" nzTheme="outline"
-                            style="background-color: #87d068;">
-                            </nz-avatar>
+                            <nz-badge [nzCount]="totalProducts" [nzOverflowCount]="99">
+                                <nz-avatar nz-tooltip nzIcon="shopping-cart" nzTheme="outline" style="background-color: #87d068;">
+                                </nz-avatar>
+                            </nz-badge>
                         </a>
                         
                     </li>
@@ -29,10 +32,10 @@
                         </nz-avatar>
                     </li>
                     <li nz-menu-item *ngIf="isLoggedIn()">
-                        <a (click)="logout()" routerLink="/login">Logout</a>
+                        <a style="color: white !important;" (click)="logout()" routerLink="/login">Logout</a>
                     </li>
                     <li nz-menu-item *ngIf="isLoggedIn()">
-                        <a routerLink="/adminpannel">Admin Pannel</a>
+                        <a style="color: white !important;" routerLink="/adminpannel">Admin Pannel</a>
                     </li>
                 </ul>
             </div>

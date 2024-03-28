@@ -117,10 +117,12 @@ exports.requestPasswordReset = async (req, res, next) => {
 };
 
 exports.resetPassword = async (req, res, next) => {
-  console.log("resetPassword: ",req.body);
+  console.log("resetPassword: ", req.body);
   try {
-    const { password } = req.body.newPassword;
-    const { token } = req.params.token;
+    console.log('body', req.body);
+    const password  = req.body.newPassword;
+    // const { newPassword } = req.body;
+    const  token = req.params.token;
 
     if (!password) {
       return res.status(400).json({ error: "Le mot de passe ne peut pas être vide." });
@@ -145,8 +147,49 @@ exports.resetPassword = async (req, res, next) => {
       to: user.email,
       from: 'lebeauc29@gmail.com',
       subject: 'Votre mot de passe a été modifié',
-      text: `Bonjour,\n\n` +
-            `Ceci est une confirmation que le mot de passe de votre compte ${user.email} vient d'être modifié.\n`
+      html: `<!DOCTYPE html>
+    <html lang="fr">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+          }
+          .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          }
+          .header {
+            margin-bottom: 20px;
+            text-align: center;
+          }
+          .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.8em;
+            color: #666;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <img src="URL_DE_VOTRE_LOGO" alt="Logo" style="max-width: 100px;">
+          </div>
+          <h1>Votre mot de passe a été modifié</h1>
+          <p>Bonjour,</p>
+          <p>Ceci est une confirmation que le mot de passe de votre compte <strong>${user.email}</strong> vient d'être modifié.</p>
+          <div class="footer">
+            <p>Merci d'utiliser notre service. Si vous n'avez pas effectué cette action, veuillez nous contacter immédiatement.</p>
+          </div>
+        </div>
+      </body>
+    </html>`
     };
 
     await transporter.sendMail(mailOptions);

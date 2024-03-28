@@ -41,3 +41,42 @@ nz-col {
 .remove-btn {
   margin-bottom: 5px;
 }
+
+.footer-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.separator {
+    flex-grow: 1;
+    margin: 0 20px;
+}
+.sub-total-text, .remove-btn {
+    margin: 0;
+}
+
+
+.sub-total-text {
+    margin: 0;
+}
+
+.remove-btn {
+    margin-left: auto;
+}
+
+.empty-cart-message {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 18px;
+    color: #666;
+}
+.checkout-controls {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.total-price {
+    margin-right: 20px;}

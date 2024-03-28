@@ -28,10 +28,9 @@ export class PanierService {
   }
 
   async updateProductQuantity(user_id: string, product_id: string, quantity: number): Promise<any> {
-  return axios.put(`${this.apiUrl}/user-product/update/`, { user_id, product_id, quantity })
+  return axios.put(`${this.apiUrl}/user-product/update`, { user_id, product_id, quantity })
     .then(response => response.data)
-    .catch(error => error.response.data);
-    console.log(user_id, product_id, quantity);
+    .catch(error => console.error('Erreur lors de la mise à jour de la quantité', error));
 }
 
 

@@ -87,7 +87,7 @@ exports.updateProductUser = async (req, res, next) => {
       res.status(200).json({ message: 'Quantité mise à jour avec succès !' });
     } else {
       console.log('Produit non trouvé.');
-      res.status(404).json({ message: 'Produit non trouvé.' });
+      res.status(404).json({ message: 'Produit non trouvé dans la base de donnée.' });
     }
   } catch (error) {
     console.error('Erreur lors de la mise à jour', error);

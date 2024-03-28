@@ -2,24 +2,34 @@ import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { AuthService } from '../services/auth.services';
+import { PanierService } from '../services/panier.services';
 
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
     standalone: true,
-    imports: [RouterModule, CommonModule, NzAvatarModule, NzToolTipModule, NzLayoutModule],
+    imports: [RouterModule, CommonModule, NzAvatarModule, NzToolTipModule, NzLayoutModule, NzBadgeModule],
     styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit{
     test=new AuthService;
+    totalProducts = 0;
    
-    constructor(private authService: AuthService,@Inject(Router) private router: Router) {}
+    constructor(private authService: AuthService,@Inject(Router) private router: Router, private panierService: PanierService) {}
 
     ngOnInit(): void {
     this.loadDarkModePreference();
+    this.updateTotalProducts();
+  }
+  updateTotalProducts(): void {
+    let token = this.authService.isAuthenticated();
+    this.panierService.getUserProduct(token.toString()).then((response) => {
+      this.totalProducts = response.reduce((acc: number, product: { quantity: number; }) => acc + product.quantity, 0);
+    });
   }
 
     isLoggedIn(): boolean {
@@ -31,9 +41,6 @@ export class HeaderComponent implements OnInit{
         localStorage.removeItem('token');
         this.router.navigate(['/login']);
   }
-  getAllProducts(): void {
-    this.router.navigate(['/home']);
-}
 toggleDarkMode(): void {
     const body = document.body;
     body.classList.toggle('ant-dark');

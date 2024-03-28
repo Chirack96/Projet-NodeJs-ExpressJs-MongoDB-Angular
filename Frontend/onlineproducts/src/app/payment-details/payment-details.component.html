@@ -1,0 +1,14 @@
+<form [formGroup]="detailsForm">
+    <div *ngIf="paymentMethod === 'card'">
+        <!-- Champs pour le paiement par carte -->
+        <input placeholder="Numéro de carte" formControlName="cardNumber">
+        <input placeholder="Date d'expiration" formControlName="expirationDate">
+        <input placeholder="CVV" formControlName="cvv">
+    </div>
+    <div *ngIf="paymentMethod === 'transfer'">
+        <!-- Champs pour le virement bancaire -->
+        <input placeholder="IBAN" formControlName="iban">
+        <input placeholder="BIC/SWIFT" formControlName="bic">
+    </div>
+    <!-- Ajoutez d'autres méthodes de paiement selon vos besoins -->
+</form>

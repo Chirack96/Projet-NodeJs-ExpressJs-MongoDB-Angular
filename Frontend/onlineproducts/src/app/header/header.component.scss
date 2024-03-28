@@ -1,8 +1,9 @@
 .layout-header nz-header {
-    background: darkgrey;
+    background: dark;
     /* Couleur de fond sombre pour l'en-tête */
     padding: 0 15px;
     /* Ajout de padding pour ne pas coller sur les bords */
+    color: white !important;
     
 }
 
@@ -10,6 +11,7 @@
     margin-bottom: 50px;
     display: flex;
     flex-wrap: wrap;
+    padding: auto;
 }
 
 .layout-header [nz-menu] {
@@ -60,3 +62,24 @@
     font-weight: bold;
     /* Ajoute une police en gras pour les éléments du menu */
 }
+/* styles.css ou styles.scss */
+.layout-header .nz-menu a {
+    color: white !important;
+}
+.logo {
+    width: 120px;
+    height: 31px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 16px 30px 16px 0;
+    float: left;
+}
+.logo img {
+    max-height: 50px;
+    /* ou une hauteur spécifique, comme 60px */
+    max-width: 100%;
+    /* Limite la largeur du logo à celle du conteneur */
+    height: auto;
+    /* Garde les proportions de l'image */
+    width: auto;
+    /* Garde les proportions de l'image */
+} 

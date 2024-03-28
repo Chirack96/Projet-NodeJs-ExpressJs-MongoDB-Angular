@@ -27,19 +27,19 @@ export class AdminPannelComponent implements OnInit {
     this.listOfProducts = response;
   }
 
-  async startEdit(id: string) {
+  startEdit(id: string): void {
     this.editId = id;
   }
 
-  async stopEdit(product: Products) {
+  async stopEdit(product: Products): Promise<void> {
     if (!this.editId) return;
-    await this.productService.updateOneProduct(this.editId, product.title.toString(), product.description.toString(), product.imageUrl.toString(), Number(product.price));
+    await this.productService.updateOneProduct(this.editId, product.title.toString(), product.description.toString(), product.imageUrl.toString(), product.price as number);
     this.editId = null;
-    await this.loadProducts(); // Rechargez les données après la sauvegarde
+    await this.loadProducts(); // Recharges les produits après la mise à jour
   }
 
-  async confirmDeletion(id: string) {
+  async confirmDeletion(id: string): Promise<void> {
     await this.productService.deleteOneProduct(id);
-    await this.loadProducts(); // Rechargez les données après la suppression
+    await this.loadProducts(); // Recharges les produits après suppression
   }
 }
