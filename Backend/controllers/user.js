@@ -81,9 +81,16 @@ exports.getAllUsers = (req, res, next) => {
 exports.getCurrentUser = (req, res, next) => {
   console.log("getCurrentUser");
   User.findOne({ _id: req.auth.userId })
-    .then((user) => res.status(200).json(user))
+    .select('-password -resetPasswordToken -resetPasswordExpires -__v -_id -admin')
+    .then((user) => {
+      if (!user) {
+        return res.status(404).json({ message: 'Utilisateur non trouvé.' });
+      }
+      res.status(200).json(user);
+    })
     .catch((error) => res.status(400).json({ error }));
 };
+
 
 exports.requestPasswordReset = async (req, res, next) => {
   try {

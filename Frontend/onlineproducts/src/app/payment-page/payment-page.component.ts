@@ -5,6 +5,7 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { PaymentDetailsComponent } from '../payment-details/payment-details.component';
 @Component({
   selector: 'app-payement-page',
   standalone: true,
@@ -12,7 +13,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
   templateUrl: './payment-page.component.html',
   styleUrl: './payment-page.component.scss'
 })
-export class PayementPageComponent {
+export class PaymentPageComponent {
   deliveryForm!: FormGroup;
 
   constructor(private fb: FormBuilder, private modalService: NzModalService) {}
@@ -51,39 +52,25 @@ initForm(): void {
 }
 
 showPaymentModal(): void {
-  const paymentMethod = this.deliveryForm.get('paymentMethod')?.value;
+    const modal = this.modalService.create({
+        nzTitle: 'Effectuer un Paiement',
+        nzContent: PaymentDetailsComponent,
+        nzFooter: null, // Pas de footer nécessaire car le composant de formulaire gère déjà la soumission
+        nzWidth: '50%', // ou vous pouvez utiliser une valeur spécifique en px
+        nzCentered: true, // Pour centrer le modal verticalement
+      // Pour un contrôle plus fin, y compris la hauteur, utilisez nzBodyStyle ou un CSS custom dans votre composant
+      nzBodyStyle: {
+        maxHeight: '80vh', // Exemple pour contrôler la hauteur maximale
+        overflowY: 'auto', // Permettre le défilement si le contenu dépasse
 
-  let modalContent = '';
-  switch (paymentMethod) {
-    case 'card':
-      modalContent = 'Veuillez saisir les détails de votre carte bancaire.';
-      break;
-    case 'transfer':
-      modalContent = 'Veuillez saisir les détails de votre virement.';
-      break;
-    case 'check':
-      modalContent = 'Instructions pour le paiement par chèque.';
-      break;
-    default:
-      modalContent = 'Veuillez choisir un mode de paiement.';
-  }
-
-  this.modalService.create({
-    nzTitle: 'Détails du paiement',
-    nzContent: modalContent,
-    nzFooter: [
-      {
-        label: 'Valider le paiement',
-        type: 'primary',
-        onClick: () => this.processPayment()
-      }
-    ]
+      },
   });
-}
+  
 
-processPayment(): void {
-  console.log('Traitement du paiement...');
-  // Ici, vous mettez en œuvre la logique de traitement du paiement.
-  // Par exemple, envoyer les données à votre serveur ou à une API de paiement externe
-}
+    // Optionnel: gérer la fermeture du modal ou les données retournées
+    modal.afterClose.subscribe(result => {
+      console.log('Modal closed', result);
+      // Traiter les données de paiement ou la fermeture ici si nécessaire
+    });
+  }
 }

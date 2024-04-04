@@ -4,7 +4,7 @@
         <nz-col nzSpan="24" *ngFor="let product of panierProducts">
             <nz-card nzHoverable class="product-card">
                 <img [src]="product.image" alt="{{product.title}}" class="product-image">
-                <h5>{{product.title}}</h5>
+                <h5>{{product.title.toString() | uppercase}}</h5>
                 <p class="card-text">{{product.price}} €</p>
                 <div class="action-controls">
                     <button nz-button nzShape="circle" class="quantity-btn"

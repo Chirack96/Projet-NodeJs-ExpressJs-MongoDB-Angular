@@ -1,0 +1,38 @@
+<div *ngIf="userDetails; else loadingOrError">
+    <h2>Détails de l'Utilisateur</h2>
+<table>
+    <tr>
+        <td>Nom d'utilisateur: </td>
+        <td>
+            <div *ngIf="editingField === 'username'; else displayUsername">
+                <input nz-input [(ngModel)]="userDetails.username" (blur)="stopEditing()" id="usernameInput" placeholder="Enter your username">
+            </div>
+            <ng-template #displayUsername>{{ userDetails.username }}</ng-template>
+        </td>
+        <td>
+            <i nz-icon nzType="edit" nzTheme="outline" (click)="startEditing('username')"></i>
+            <i nz-icon nzType="delete" nzTheme="outline" (click)="supprimer('username')"></i>
+        </td>
+    </tr>
+    <tr>
+        <td>Email: </td>
+        <td>
+            <div *ngIf="editingField === 'email'; else displayEmail">
+                <input nz-input [(ngModel)]="userDetails.email" (blur)="stopEditing()" id="emailInput" placeholder="Enter your email">
+            </div>
+            <ng-template #displayEmail>{{ userDetails.email }}</ng-template>
+        </td>
+        <td>
+            <i nz-icon nzType="edit" nzTheme="outline" (click)="startEditing('email')"></i>
+            <i nz-icon nzType="delete" nzTheme="outline" (click)="supprimer('email')"></i>
+        </td>
+    </tr>
+</table>
+
+<button nz-button nzType="primary" (click)="stopEditing()">Mettre à jour mes informations</button>
+</div>
+
+<ng-template #loadingOrError>
+    <p *ngIf="!userDetails && !loadingError">Chargement des détails de l'utilisateur...</p>
+    <p *ngIf="loadingError">Impossible de charger les détails de l'utilisateur. Veuillez réessayer plus tard.</p>
+</ng-template>

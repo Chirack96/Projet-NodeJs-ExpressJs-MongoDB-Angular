@@ -1,14 +1,72 @@
-<form [formGroup]="detailsForm">
-    <div *ngIf="paymentMethod === 'card'">
-        <!-- Champs pour le paiement par carte -->
-        <input placeholder="Numéro de carte" formControlName="cardNumber">
-        <input placeholder="Date d'expiration" formControlName="expirationDate">
-        <input placeholder="CVV" formControlName="cvv">
-    </div>
-    <div *ngIf="paymentMethod === 'transfer'">
-        <!-- Champs pour le virement bancaire -->
-        <input placeholder="IBAN" formControlName="iban">
-        <input placeholder="BIC/SWIFT" formControlName="bic">
-    </div>
-    <!-- Ajoutez d'autres méthodes de paiement selon vos besoins -->
+<!-- unified-payment-form.component.html -->
+<form nz-form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+    <nz-form-item>
+        <nz-form-control>
+            <div class="payment-methods">
+                <div class="payment-option" (click)="selectPaymentMethod('card')">
+                    <span class="circle" [ngClass]="{'selected': isSelected('card')}"></span>
+                    <img src="/assets/carte.png" alt="Carte Bancaire" class="payment-logo">
+                </div>
+                <div class="payment-option" (click)="selectPaymentMethod('check')">
+                    <span class="circle" [ngClass]="{'selected': isSelected('check')}"></span>
+                    <img src="/assets/cheque.jpg" alt="Chèque" class="payment-logo">
+                </div>
+                <div class="payment-option" (click)="selectPaymentMethod('transfer')">
+                    <span class="circle" [ngClass]="{'selected': isSelected('transfer')}"></span>
+                    <img src="/assets/virement.png" alt="Virement" class="payment-logo">
+                </div>
+            </div>
+        </nz-form-control>
+    </nz-form-item>
+
+    <!-- Paiement par carte -->
+    <ng-container *ngIf="paymentForm.get('paymentMethod')?.value === 'card'">
+        <nz-form-item>
+            <nz-form-control>
+                <input nz-input placeholder="Numéro de carte" formControlName="cardNumber" />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-control>
+                <input nz-input placeholder="Date d'expiration (MM/YY)" formControlName="expiryDate" />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-control>
+                <input nz-input placeholder="CVV" formControlName="cvv" />
+            </nz-form-control>
+        </nz-form-item>
+    </ng-container>
+
+    <!-- Paiement par chèque -->
+    <ng-container *ngIf="paymentForm.get('paymentMethod')?.value === 'check'">
+        <nz-form-item>
+            <nz-form-control>
+                <input nz-input placeholder="Numéro de chèque" formControlName="checkNumber" />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-control>
+                <input nz-input type="number" placeholder="Montant" formControlName="amount" />
+            </nz-form-control>
+        </nz-form-item>
+    </ng-container>
+
+    <!-- Paiement par virement -->
+    <ng-container *ngIf="paymentForm.get('paymentMethod')?.value === 'transfer'">
+        <nz-form-item>
+            <nz-form-control>
+                <input nz-input placeholder="Nom du bénéficiaire" formControlName="beneficiaryName" />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-control>
+                <input nz-input placeholder="Numéro de compte" formControlName="accountNumber" />
+            </nz-form-control>
+        </nz-form-item>
+    </ng-container>
+
+    <nz-form-item *ngIf="paymentForm.get('paymentMethod')?.value">
+        <button nz-button nzType="primary" type="submit">Confirmer le paiement</button>
+    </nz-form-item>
 </form>

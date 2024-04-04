@@ -27,9 +27,11 @@
                         
                     </li>
                     <li nz-menu-item *ngIf="isLoggedIn()">
+                        <a routerLink="/user-data">
                         <nz-avatar nz-tooltip nzIcon="user" nzTheme="outline"
                             style="background-color: #87d068;">
                         </nz-avatar>
+                        </a>
                     </li>
                     <li nz-menu-item *ngIf="isLoggedIn()">
                         <a style="color: white !important;" (click)="logout()" routerLink="/login">Logout</a>

@@ -7,10 +7,11 @@ import { FinalResetPasswordComponent } from './final-reset-password/final-reset-
 import { InscriptionComponent } from './inscription/inscription.component';
 import { LoginComponent } from './login/login.component';
 import { PanierComponent } from './panier/panier.component';
-import { PayementPageComponent } from './payment-page/payment-page.component';
+import { PaymentPageComponent } from './payment-page/payment-page.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductComponent } from './product/product.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { UserDataComponent } from './user-data/user-data.component';
 
 
 
@@ -25,8 +26,8 @@ export const appRoutes: Routes = [
         { path: 'adminpannel', component: AdminPannelComponent },
         { path: 'product/:id', component: ProductComponent },
         { path: 'finalresetpassword/:token', component: FinalResetPasswordComponent },
-        { path: 'payment', component: PayementPageComponent }
-        
+        { path: 'payment', component: PaymentPageComponent },
+        { path: 'user-data', component: UserDataComponent }
 
 ];
 

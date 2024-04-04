@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
+import axios from 'axios';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  private apiUrl = 'http://localhost:3000';
   
   static isRegisteredIn: boolean = false;
 
@@ -66,4 +68,28 @@ export class AuthService {
       return false;
     }
   }
+
+
+  async getUserDetails(): Promise<any> {
+    const token = localStorage.getItem('token');
+    console.log(token);
+    if (!token) {
+      console.log('Aucun token trouvé, utilisateur non authentifié');
+      return null;
+    }
+
+    try {
+      const response = await axios.get('http://localhost:3000/auth/current', {
+        headers: {
+          'Authorization': `Bearer ${token}` // Envoyer le token dans l'en-tête Authorization
+        }
+      });
+      console.log(response.data);
+      return response.data; // Retourne directement les données de réponse pour un traitement ultérieur
+    } catch (error: any) {
+      console.error('Erreur lors de la récupération des détails de l\'utilisateur:', error.response ? error.response.data : error);
+      return null;
+    }
+}
+
 }
