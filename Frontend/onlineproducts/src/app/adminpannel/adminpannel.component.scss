@@ -43,3 +43,26 @@ input[nz-input] {
 .nz-table {
     width: 100%;
 }
+
+/* user-table.component.scss */
+:host {
+    display: block;
+    padding: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+nz-table {
+    margin-top: 16px;
+}
+
+th {
+    background-color: #f0f2f5;
+    color: #000;
+    font-weight: bold;
+}
+
+td {
+    color: #444;
+}

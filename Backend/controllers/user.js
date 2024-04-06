@@ -59,11 +59,12 @@ exports.login = (req, res, next) => {
           res.status(200).json({
             userId: user._id,
             msg: true,
+            isAdmin: user.admin,
             token: jwt.sign(
               { userId: user._id, isAdmin: user.admin },
               "RANDOM_TOKEN_SECRET",
               { expiresIn: "24h" }
-            ),
+            )
           });
         })
         .catch((error) => res.status(500).json({ error }));
@@ -74,6 +75,7 @@ exports.login = (req, res, next) => {
 exports.getAllUsers = (req, res, next) => {
   console.log("getAllUsers");
   User.find()
+    .select('-password -resetPasswordToken -resetPasswordExpires -__v -admin')
     .then((users) => res.status(200).json(users))
     .catch((error) => res.status(400).json({ error }));
 };

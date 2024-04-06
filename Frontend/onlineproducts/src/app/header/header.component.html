@@ -14,7 +14,7 @@
                     <li nz-menu-item *ngIf="!isLoggedIn()">
                         <a style="color: white !important;" routerLink="/inscription">Register</a>
                     </li>
-                    <li nz-menu-item *ngIf="isLoggedIn()">
+                    <li nz-menu-item *ngIf="isLoggedIn() && isAdmin()">
                         <a style="color: white !important;" routerLink="/addproduct">Add Product</a>
                     </li>
                     <li nz-menu-item *ngIf="isLoggedIn()">
@@ -32,11 +32,12 @@
                             style="background-color: #87d068;">
                         </nz-avatar>
                         </a>
+                        {{username}}
                     </li>
                     <li nz-menu-item *ngIf="isLoggedIn()">
                         <a style="color: white !important;" (click)="logout()" routerLink="/login">Logout</a>
                     </li>
-                    <li nz-menu-item *ngIf="isLoggedIn()">
+                    <li nz-menu-item *ngIf="isLoggedIn() && isAdmin()">
                         <a style="color: white !important;" routerLink="/adminpannel">Admin Pannel</a>
                     </li>
                 </ul>

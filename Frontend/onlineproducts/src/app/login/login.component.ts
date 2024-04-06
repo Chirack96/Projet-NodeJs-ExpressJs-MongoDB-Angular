@@ -47,11 +47,14 @@ export class LoginComponent implements OnInit {
       
       axios.post(`http://localhost:3000/auth/login`, loginData)
         .then(response => {
+          console.log(response);
           console.log(response.data);
           if (response.data.msg) {
             this.notification.create('success', 'Login Successful', `Welcome back ${username}!`);
-            this.authService.login(response.data.token);
+            this.authService.login(response.data.token, response.data.isAdmin, username);
             localStorage.setItem('token', response.data.token);
+            localStorage.setItem('isAdmin', response.data.isAdmin);
+            localStorage.setItem('username', username);
             this.router.navigate(['/home']);
 
           }

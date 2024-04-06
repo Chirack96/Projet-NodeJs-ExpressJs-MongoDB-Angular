@@ -18,27 +18,41 @@ import { PanierService } from '../services/panier.services';
 export class HeaderComponent implements OnInit{
     test=new AuthService;
     totalProducts = 0;
-   
-    constructor(private authService: AuthService,@Inject(Router) private router: Router, private panierService: PanierService) {}
+    username: string | null = null;
+
+    constructor(private authService: AuthService, @Inject(Router) private router: Router, private panierService: PanierService) {
+      this.username = localStorage.getItem('username');
+        }
 
     ngOnInit(): void {
-    this.loadDarkModePreference();
-    this.updateTotalProducts();
-  }
-  updateTotalProducts(): void {
-    let token = this.authService.isAuthenticated();
-    this.panierService.getUserProduct(token.toString()).then((response) => {
-      this.totalProducts = response.reduce((acc: number, product: { quantity: number; }) => acc + product.quantity, 0);
-    });
-  }
+        this.loadDarkModePreference();
+        this.updateTotalProducts();
+       this.username = localStorage.getItem('username');
+        
+      }
 
-    isLoggedIn(): boolean {
-        return AuthService.isLoggedIn;
+      
+
+      updateTotalProducts(): void {
+        let token = this.authService.isAuthenticated();
+        this.panierService.getUserProduct(token.toString()).then((response) => {
+          this.totalProducts = response.reduce((acc: number, product: { quantity: number; }) => acc + product.quantity, 0);
+        });
+      }
+
+      isLoggedIn(): boolean {
+          return AuthService.isLoggedIn;
+    }
+    isAdmin(): boolean {
+        return AuthService.isAdmin;
     }
 
     logout(): void {
         this.authService.logout();
         localStorage.removeItem('token');
+        localStorage.removeItem('isAdmin');
+        localStorage.removeItem('username');
+        this.username = null;
         this.router.navigate(['/login']);
   }
 toggleDarkMode(): void {

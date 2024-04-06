@@ -6,4 +6,5 @@ export class User {
         firstName = '';
         lastName = '';
         token = '';
+        isAdmin = false;
     }

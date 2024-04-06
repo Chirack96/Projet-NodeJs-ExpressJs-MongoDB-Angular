@@ -1,10 +1,12 @@
-<div class="table-container">
+<nz-tabset nzCentered>
+    <nz-tab nzTitle="Products List">
+        <div class="table-container">
     <nz-table #productTable [nzData]="listOfProducts" [nzBordered]="true" nzSize="middle">
         <thead>
             <tr>
                 <th nzWidth="10%">#</th> <!-- Colonne de numérotation ajoutée -->
-                <th nzWidth="20%">Nom</th>
-                <th nzWidth="20%">Prix</th>
+                <th nzWidth="30%">Title</th>
+                <th nzWidth="30%">Price</th>
                 <th nzWidth="50%">Actions</th>
             </tr>
         </thead>
@@ -33,3 +35,47 @@
         </tbody>
     </nz-table>
 </div>
+    </nz-tab>
+    <nz-tab nzTitle="Users">
+        <nz-table #basicTable [nzData]="listOfData" [nzBordered]="true">
+            <thead>
+                <tr>
+                    <th nzWidth="10%">#</th>
+                    <th nzWidth="15%">Username</th>
+                    <th nzWidth="20%">Email</th>
+                    <th nzWidth="15%">Tel</th>
+                    <th nzWidth="20%">Postal Adress</th>
+                    <th nzWidth="50%">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of basicTable.data, let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>
+                        <input *ngIf="editId === user._id.toString()" [(ngModel)]="user.username" nz-input placeholder="Enter username" />
+                        <div *ngIf="editId !== user._id.toString()">{{ user.username }}</div>
+                    </td>
+                        <td>
+                            <input *ngIf="editId === user._id.toString()" [(ngModel)]="user.email" nz-input placeholder="Enter email" />
+                            <div *ngIf="editId !== user._id.toString()">{{ user.email }}</div>
+                        </td>
+                        <td>
+                            <input *ngIf="editId === user._id.toString()" [(ngModel)]="user.tel" nz-input placeholder="Enter new tel" />
+                            <div *ngIf="editId !== user._id.toString()">{{ user.tel }}</div>
+                        </td>
+                        <td>
+                        <input *ngIf="editId === user._id.toString()" [(ngModel)]="user.postalAddress" nz-input placeholder="Enter Postal Address" />
+                        <div *ngIf="editId !== user._id.toString()">{{ user.postalAddress }}</div>
+                    </td>
+                    <td>
+                        <button *ngIf="editId !== user._id.toString()" nz-button nzType="primary" style="margin-right: 8px;"
+                            (click)="startEdit(user._id.toString())">Modifier</button>
+                        <button *ngIf="editId === user._id.toString()" nz-button nzType="default" style="margin-right: 8px;"
+                            (click)="stopEdit(user)">Sauvegarder</button>
+                        <button nz-button nzType="danger" (click)="confirmDeletion(user._id.toString())">Supprimer</button>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table></nz-tab>
+    <nz-tab nzTitle="Sell">Loading ...</nz-tab>
+</nz-tabset>
