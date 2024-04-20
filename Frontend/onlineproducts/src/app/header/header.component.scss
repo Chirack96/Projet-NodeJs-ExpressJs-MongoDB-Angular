@@ -74,7 +74,7 @@
     float: left;
 }
 .logo img {
-    max-height: 70px;
+    max-height: 68px;
     /* ou une hauteur spécifique, comme 60px */
     max-width: 100%;
     /* Limite la largeur du logo à celle du conteneur */
@@ -82,4 +82,5 @@
     /* Garde les proportions de l'image */
     width: auto;
     /* Garde les proportions de l'image */
+    margin: 50;
 } 
