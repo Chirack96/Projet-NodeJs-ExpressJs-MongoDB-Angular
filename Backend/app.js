@@ -13,9 +13,7 @@ const dbPass = process.env.DB_PASSWORD;
 
 
 
-mongoose.connect(`mongodb+srv://${dbUser}:${dbPass}@cluster0.qiaejfh.mongodb.net/?retryWrites=true&w=majority`,
-  { useNewUrlParser: true,
-    useUnifiedTopology: true })
+mongoose.connect(`mongodb+srv://${dbUser}:${dbPass}@cluster0.qiaejfh.mongodb.net/?retryWrites=true&w=majority`)
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
 
