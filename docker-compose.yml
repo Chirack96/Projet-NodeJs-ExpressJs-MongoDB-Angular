@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  frontend:
+    build:
+      context: ./Frontend/onlineproducts
+      dockerfile: Dockerfile
+    volumes:
+      - ./Frontend/onlineproducts:/app
+      - /app/node_modules
+    ports:
+      - "4200:4200"
+    environment:
+      - CHOKIDAR_USEPOLLING=true # Aide au hot-reloading sur certains OS/host
+    restart: always
+
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_CONNECTION_STRING=mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@cluster0.qiaejfh.mongodb.net/?retryWrites=true&w=majority
+    restart: always
+
+networks:
+  default:
+    driver: bridge
